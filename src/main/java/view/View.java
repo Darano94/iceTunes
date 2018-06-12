@@ -10,7 +10,7 @@ public class View extends BorderPane {
 
     // Variablen
 
-    private Controller controller;
+    private mvc.Controller controller;
 
     private ChoiceBox choiceBox = new ChoiceBox();
 
@@ -86,7 +86,7 @@ public class View extends BorderPane {
         btnstop.setOnAction(e -> controller.stopsong(this));
     }
 
-    public void addContoller(Controller contr) {
+    public void addController(mvc.Controller contr) {
         this.controller = contr;
     }
 
