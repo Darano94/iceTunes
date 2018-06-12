@@ -1,4 +1,4 @@
-package mvc;
+package controller;
 
 import classes.Playlist;
 import classes.SerializableStrategy;
@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import model.Model;
+import view.View;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +23,7 @@ public class Controller implements interfaces.Controller {
 
     // Variablen
 
-    private mvc.Model model;
+    private Model model;
     private Media file;
     private MediaPlayer player;
 
@@ -46,8 +48,9 @@ public class Controller implements interfaces.Controller {
     public String titleCell, idCell;
 
     //Methoden
+
     @Override
-    public void link( mvc.Model model, mvc.View view) {
+    public void link( Model model, View view) {
         this.model = model;
         view.addController(this);
     }
@@ -64,7 +67,7 @@ public class Controller implements interfaces.Controller {
 
     // TODO: 05.06.2018 model.updateplaylistview auslagern -> ggf unnötig
 
-    public void addallbtn(mvc.View view) {
+    public void addallbtn(View view) {
         SerializableStrategy strat = new SerializableStrategy();
 
         try {
@@ -86,7 +89,7 @@ public class Controller implements interfaces.Controller {
 
     // TODO: 05.06.2018 model.updateplaylistview un LibviewUpdate auslagern -> ggf unnötig
     @Override
-    public void addtoplaylistbtn(mvc.View view) {
+    public void addtoplaylistbtn(View view) {
 
         try {
             SerializableStrategy strat = new SerializableStrategy();
@@ -125,7 +128,7 @@ public class Controller implements interfaces.Controller {
     }
 
     @Override
-    public void nextbtn(mvc.View view) {
+    public void nextbtn(View view) {
         if (tmp.getId() < 0) { //wenn tmp ids negativ ist (also in playlist geeklickzt wure
             if (tmp.getId() - 1 >= -model.getPlaylist().size()) { //solange es noch nächsten song gibt
                 playSong((Song) model.getPlaylist().findSongByID(tmp.getId() - 1), view); //nächsten Song abpielen
@@ -144,7 +147,7 @@ public class Controller implements interfaces.Controller {
     }
 
     @Override
-    public void playpauseSong(mvc.View view) {
+    public void playpauseSong(View view) {
         if (isplaying == false) {
             playSong(tmp, view);
             view.setbtnplaypause("||");
@@ -165,7 +168,7 @@ public class Controller implements interfaces.Controller {
 
 
     @Override
-    public void backbtn(mvc.View view) {
+    public void backbtn(View view) {
         if (tmp.getId() < 0) {
             if (tmp.getId() + 1 < 0) { //solange es noch nächsten song gibt
                 playSong((Song) model.getPlaylist().findSongByID(tmp.getId() + 1), view);
@@ -184,14 +187,14 @@ public class Controller implements interfaces.Controller {
     // TODO: 05.06.2018 updatePlaylistview weg 
 
     @Override
-    public void deleteplaylist(mvc.View view) {
+    public void deleteplaylist(View view) {
         model.getPlaylist().clearPlaylist();
         updatePlaylistView(view);
     }
 
     // TODO: 05.06.2018 updateviews weg 
     @Override
-    public void commitbtn(mvc.View view) {
+    public void commitbtn(View view) {
         String title = view.getTxtTitle().getText();
         String interpret = view.getTxtInterpret().getText();
         String album = view.getTxtAlbum().getText();
@@ -206,13 +209,13 @@ public class Controller implements interfaces.Controller {
 
     // TODO: 05.06.2018
     @Override
-    public void updateLibView(mvc.View view) {
+    public void updateLibView(View view) {
         updateLibView(view);
     }
 
     // TODO: 05.06.2018
     @Override
-    public void loadlib(String path, Playlist allsongs, mvc.View view) throws RemoteException {
+    public void loadlib(String path, Playlist allsongs, View view) throws RemoteException {
         model.setAllSongs(new Playlist());
         f = new File(path);
         int counter = 0;
@@ -236,18 +239,18 @@ public class Controller implements interfaces.Controller {
         playSong(startSong, view);
 
 
-        model.updateLibView(view);
-        model.updatePlaylistView(view);
+        updateLibView(view);
+        updatePlaylistView(view);
     }
 
     // TODO: 05.06.2018
     @Override
-    public void updatePlaylistView(mvc.View view, interfaces.Song song) {
+    public void updatePlaylistView(View view, interfaces.Song song) {
         updatePlaylistView(view);
     }
 
     @Override
-    public void stopsong(mvc.View view) {
+    public void stopsong(View view) {
         player.stop();
         isplaying = false;
         view.setbtnplaypause("|>");
@@ -255,7 +258,7 @@ public class Controller implements interfaces.Controller {
     }
 
     @Override
-    public void playSong(Song s, mvc.View view) {
+    public void playSong(Song s, View view) {
         songFile = new File(s.pathProperty().getValue());
         file = new Media(songFile.toURI().toString());
         player = new MediaPlayer(file);
@@ -293,7 +296,7 @@ public class Controller implements interfaces.Controller {
 
 
     }
-    public void updatePlaylistView(mvc.View view) {
+    public void updatePlaylistView(View view) {
 
         // TODO: 20.05.18 nur wenn song noch nicht vorhanden ist!
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<ListView<Song>, ListCell<Song>>() {
@@ -344,11 +347,11 @@ public class Controller implements interfaces.Controller {
 
 
 
-    public void addAllSongs(mvc.View view) throws Exception {
+    public void addAllSongs(View view) throws Exception {
 
     }
 
-    public void addtoplaylist(mvc.View view) throws IOException, ClassNotFoundException {
+    public void addtoplaylist(View view) throws IOException, ClassNotFoundException {
 
 
     }
@@ -356,7 +359,7 @@ public class Controller implements interfaces.Controller {
 
 
 
-    public void updateLibView(mvc.View view) {
+    public void updateLibView(View view) {
         tmp = new Song();
         view.getSongListView().setCellFactory(new javafx.util.Callback<ListView<Song>, ListCell<Song>>() {
             @Override
@@ -392,7 +395,7 @@ public class Controller implements interfaces.Controller {
     }
 
 
-    public void initClickedSong(mvc.View view, Playlist playlistLib) {
+    public void initClickedSong(View view, Playlist playlistLib) {
         //get the Song from allSongs which is represented by the clicked cell
         for (int i = 0; i < playlistLib.size(); i++) {
             tmp = (Song) playlistLib.get(i);

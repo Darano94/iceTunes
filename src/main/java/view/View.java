@@ -1,6 +1,7 @@
-package mvc;
+package view;
 
 import classes.Song;
+import controller.Controller;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -10,7 +11,7 @@ public class View extends BorderPane {
 
     // Variablen
 
-    private mvc.Controller controller;
+    private Controller controller;
 
     private ChoiceBox choiceBox = new ChoiceBox();
 
@@ -86,7 +87,7 @@ public class View extends BorderPane {
         btnstop.setOnAction(e -> controller.stopsong(this));
     }
 
-    public void addController(mvc.Controller contr) {
+    public void addController(Controller contr) {
         this.controller = contr;
     }
 

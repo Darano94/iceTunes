@@ -1,4 +1,4 @@
-package mvc;
+package model;
 
 import classes.Playlist;
 import classes.SerializableStrategy;
@@ -26,12 +26,7 @@ public class Model {
     private Playlist playlist;
 
 
-    public String titleCell, idCell;
-
-    //Methoden
-
-
-
+    // Getter Setter
     public Playlist getAllSongs() {
         return this.allSongs;
     }
@@ -49,7 +44,5 @@ public class Model {
     }
 
 
-
-    // Getter Setter
 
 }

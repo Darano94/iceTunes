@@ -6,8 +6,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import model.Model;
 import mvc.Model;
 import mvc.View;
+import view.View;
 
 import java.io.File;
 import java.rmi.RemoteException;
