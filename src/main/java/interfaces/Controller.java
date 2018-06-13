@@ -7,8 +7,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import model.Model;
-import mvc.Model;
-import mvc.View;
 import view.View;
 
 import java.io.File;
@@ -38,7 +36,7 @@ public interface Controller {
 
     void loadlib(String path, Playlist allsongs, View view) throws RemoteException;
 
-    void updatePlaylistView(View view, Song song);
+    void updatePlaylistView(View view);
 
     void loadPlaylist(Playlist playlist) throws RemoteException;
 

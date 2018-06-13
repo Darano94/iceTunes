@@ -7,9 +7,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Model;
-import mvc.Controller;
-import mvc.Model;
-import mvc.View;
 import view.View;
 
 public class Main extends Application {
@@ -24,7 +21,7 @@ public class Main extends Application {
 
         Controller controller = new Controller();
         controller.link(model, view);
-        controller.loadlib("/Users/darano/mukke/", new Playlist(), view);
+        controller.loadlib("C:/Users/isabe/Desktop/icetunes", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 

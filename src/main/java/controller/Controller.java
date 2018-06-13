@@ -208,10 +208,6 @@ public class Controller implements interfaces.Controller {
     }
 
     // TODO: 05.06.2018
-    @Override
-    public void updateLibView(View view) {
-        updateLibView(view);
-    }
 
     // TODO: 05.06.2018
     @Override
@@ -244,10 +240,7 @@ public class Controller implements interfaces.Controller {
     }
 
     // TODO: 05.06.2018
-    @Override
-    public void updatePlaylistView(View view, interfaces.Song song) {
-        updatePlaylistView(view);
-    }
+
 
     @Override
     public void stopsong(View view) {
@@ -347,18 +340,10 @@ public class Controller implements interfaces.Controller {
 
 
 
-    public void addAllSongs(View view) throws Exception {
-
-    }
-
-    public void addtoplaylist(View view) throws IOException, ClassNotFoundException {
-
-
-    }
 
 
 
-
+    @Override
     public void updateLibView(View view) {
         tmp = new Song();
         view.getSongListView().setCellFactory(new javafx.util.Callback<ListView<Song>, ListCell<Song>>() {
