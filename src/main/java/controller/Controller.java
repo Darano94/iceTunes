@@ -3,8 +3,6 @@ package controller;
 import classes.Playlist;
 import classes.SerializableStrategy;
 import classes.Song;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ModifiableObservableListBase;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -18,6 +16,7 @@ import view.View;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Controller implements interfaces.Controller {
 
@@ -77,8 +76,37 @@ public class Controller implements interfaces.Controller {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        updatePlaylistView(view);
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        setS(s);
+                        view.setTxtTitle(s.getTitle());
+                        view.setTxtAlbum(s.getAlbum());
+                        view.setTxtInterpret(s.getInterpret());
+                    }
+                });
+                return cell;
 
+            }
+        });
     }
 
     @Override
@@ -90,10 +118,10 @@ public class Controller implements interfaces.Controller {
 
             strat.writeSong(s);
 
-            Song s = (Song) strat.readSong();
-            s.setId(counter);
+            AtomicReference<Song> s = new AtomicReference<>((Song) strat.readSong());
+            s.get().setId(counter);
 
-            model.getPlaylist().addSong(s);
+            model.getPlaylist().addSong(s.get());
 
             strat.openWritablePlaylist();
             strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
@@ -103,12 +131,38 @@ public class Controller implements interfaces.Controller {
             model.setPlaylist((Playlist) strat.readPlaylist());
             strat.closeReadablePlaylist();
 
-
-            System.out.println(model.getPlaylist().size());
             counter--;
+            view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+            view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+                @Override
+                public ListCell<Song> call(ListView<Song> param) {
+                    ListCell<Song> cell = new ListCell<Song>() {
+                        @Override
+                        protected void updateItem(Song s, boolean bln) {
+                            super.updateItem(s, bln);
+                            if (s != null) {
+                                String tmps = s.getTitle();
+                                tmps.replace(".mp3", "");
+                                setText(tmps);
+                                setId(s.getTitle());
+                            }
+                        }
+                    };
+                    cell.setOnMouseClicked((MouseEvent event) -> {
+                        if (cell.isEmpty()) {
+                            event.consume();
+                        } else {
+                            s.set(cell.getItem());
+                            setS(s.get());
+                            view.setTxtTitle(s.get().getTitle());
+                            view.setTxtAlbum(s.get().getAlbum());
+                            view.setTxtInterpret(s.get().getInterpret());
+                        }
+                    });
+                    return cell;
 
-            updateLibView(view);
-            updatePlaylistView(view);
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -175,7 +229,37 @@ public class Controller implements interfaces.Controller {
     @Override
     public void deleteplaylist(View view) {
         model.getPlaylist().clearPlaylist();
-        updatePlaylistView(view);
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        setS(s);
+                        view.setTxtTitle(s.getTitle());
+                        view.setTxtAlbum(s.getAlbum());
+                        view.setTxtInterpret(s.getInterpret());
+                    }
+                });
+                return cell;
+
+            }
+        });
     }
 
     @Override
@@ -186,10 +270,38 @@ public class Controller implements interfaces.Controller {
         s.setTitle(title);
         s.setInterpret(interpret);
         s.setAlbum(album);
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        setS(s);
+                        view.setTxtTitle(s.getTitle());
+                        view.setTxtAlbum(s.getAlbum());
+                        view.setTxtInterpret(s.getInterpret());
+                    }
+                });
+                return cell;
 
-        updateLibView(view);
-        updatePlaylistView(view);
-        updateLibView(view);
+            }
+        });
+
     }
 
     @Override
@@ -215,10 +327,8 @@ public class Controller implements interfaces.Controller {
         startSong = new Song();
         startSong.setPath(startFile.getPath());
         playSong(startSong, view);
+        view.getSongListView().setItems((ModifiableObservableListBase) model.getAllSongs());
 
-
-        updateLibView(view);
-        updatePlaylistView(view);
     }
 
     @Override
@@ -260,9 +370,6 @@ public class Controller implements interfaces.Controller {
 
     }
 
-    public void updatePlaylistView(View view) {
-        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
-    }
 
     @Override
     public void pauseSong(Song s) {
@@ -276,12 +383,14 @@ public class Controller implements interfaces.Controller {
         this.s = s;
     }
 
-    @Override
-    public void updateLibView(View view) {
-        view.getSongListView().setItems((ModifiableObservableListBase) model.getAllSongs());
+
+
+    public Playlist getAllSongs(){
+        return model.getAllSongs();
     }
 
 
-
-
+    public Playlist getPlaylist() {
+        return model.getPlaylist();
+    }
 }

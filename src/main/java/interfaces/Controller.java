@@ -32,8 +32,6 @@ public interface Controller {
 
     void commitbtn(View view);
 
-    void updateLibView(View view);
-
     void loadlib(String path, Playlist allsongs, View view) throws RemoteException;
 
     void loadPlaylist(Playlist playlist) throws RemoteException;

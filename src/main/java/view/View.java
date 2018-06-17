@@ -2,6 +2,7 @@ package view;
 
 import classes.Song;
 import controller.Controller;
+import javafx.collections.ModifiableObservableListBase;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -96,7 +97,7 @@ public class View extends BorderPane {
                     protected void updateItem(Song s, boolean bln) {
                         super.updateItem(s, bln);
                         if (s != null) {
-                            String tmps = s.titleProperty().getValue();
+                            String tmps = s.getTitle();
                             tmps.replace(".mp3", "");
                             setText(tmps);
                             setId(s.getTitle());
@@ -112,14 +113,13 @@ public class View extends BorderPane {
                         setTxtTitle(s.getTitle());
                         setTxtAlbum(s.getAlbum());
                         setTxtInterpret(s.getInterpret());
-                        System.out.println(s.titleProperty().getValue());
-
                     }
                 });
                 return cell;
 
             }
         });
+
         songListView.setCellFactory(new javafx.util.Callback<>() {
             @Override
             public ListCell<Song> call(ListView<Song> param) {
@@ -145,12 +145,12 @@ public class View extends BorderPane {
                         setTxtTitle(s.getTitle());
                         setTxtAlbum(s.getAlbum());
                         setTxtInterpret(s.getInterpret());
-                        System.out.println(s.titleProperty().getValue());
                     }
                 });
                 return cell;
             }
         });
+
     }
 
     public void addController(Controller contr) {
