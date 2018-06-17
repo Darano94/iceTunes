@@ -189,6 +189,9 @@ public class Controller implements interfaces.Controller {
         }
         view.setbtnplaypause("||");
         currentduration = null;
+        view.setTxtAlbum(s.getAlbum());
+        view.setTxtInterpret(s.getInterpret());
+        view.setTxtTitle(s.getTitle());
     }
 
     @Override
@@ -224,6 +227,9 @@ public class Controller implements interfaces.Controller {
             }
         }
         currentduration = null;
+        view.setTxtAlbum(s.getAlbum());
+        view.setTxtInterpret(s.getInterpret());
+        view.setTxtTitle(s.getTitle());
     }
 
     @Override
