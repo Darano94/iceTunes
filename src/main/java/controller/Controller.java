@@ -35,7 +35,7 @@ public class Controller implements interfaces.Controller {
     private Duration fullduration;
     private Duration currentduration;
 
-    private Song tmp;
+
     private Song s;
     private Song startSong;
 
@@ -50,7 +50,7 @@ public class Controller implements interfaces.Controller {
     //Methoden
 
     @Override
-    public void link( Model model, View view) {
+    public void link(Model model, View view) {
         this.model = model;
         view.addController(this);
     }
@@ -80,11 +80,9 @@ public class Controller implements interfaces.Controller {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-            updatePlaylistView(view);
+        updatePlaylistView(view);
 
     }
-
-
 
 
     // TODO: 05.06.2018 model.updateplaylistview un LibviewUpdate auslagern -> ggf unnötig
@@ -97,7 +95,7 @@ public class Controller implements interfaces.Controller {
             initClickedSong(view, model.getAllSongs());
 
 
-            strat.writeSong(tmp);
+            strat.writeSong(s);
 
             Song s = (Song) strat.readSong();
             s.setId(counter);
@@ -115,7 +113,7 @@ public class Controller implements interfaces.Controller {
 
             System.out.println(model.getPlaylist().size());
             counter--;
-            
+
             updateLibView(view);
             updatePlaylistView(view);
         } catch (IOException e) {
@@ -129,17 +127,17 @@ public class Controller implements interfaces.Controller {
 
     @Override
     public void nextbtn(View view) {
-        if (tmp.getId() < 0) { //wenn tmp ids negativ ist (also in playlist geeklickzt wure
-            if (tmp.getId() - 1 >= -model.getPlaylist().size()) { //solange es noch nächsten song gibt
-                playSong((Song) model.getPlaylist().findSongByID(tmp.getId() - 1), view); //nächsten Song abpielen
-                tmp = (Song) model.getPlaylist().findSongByID(tmp.getId() - 1); //tmp = aktueller songs setzen, damit wir immer next drücken könnten
+        if (s.getId() < 0) { //wenn s ids negativ ist (also in playlist geeklickzt wure
+            if (s.getId() - 1 >= -model.getPlaylist().size()) { //solange es noch nächsten song gibt
+                playSong((Song) model.getPlaylist().findSongByID(s.getId() - 1), view); //nächsten Song abpielen
+                s = (Song) model.getPlaylist().findSongByID(s.getId() - 1); //s = aktueller songs setzen, damit wir immer next drücken könnten
 
             }
         }
-        if (tmp.getId() > 0) {
-            if (tmp.getId() + 1 <= model.getAllSongs().size()) {
-                playSong((Song) model.getAllSongs().findSongByID(tmp.getId() + 1), view);
-                tmp = (Song) model.getAllSongs().findSongByID(tmp.getId() + 1);
+        if (s.getId() > 0) {
+            if (s.getId() + 1 <= model.getAllSongs().size()) {
+                playSong((Song) model.getAllSongs().findSongByID(s.getId() + 1), view);
+                s = (Song) model.getAllSongs().findSongByID(s.getId() + 1);
             }
         }
         view.setbtnplaypause("||");
@@ -149,11 +147,11 @@ public class Controller implements interfaces.Controller {
     @Override
     public void playpauseSong(View view) {
         if (isplaying == false) {
-            playSong(tmp, view);
+            playSong(s, view);
             view.setbtnplaypause("||");
             isplaying = true;
         } else if (isplaying == true) {
-            pauseSong(tmp);
+            pauseSong(s);
             view.setbtnplaypause("|>");
             isplaying = false;
         }
@@ -164,27 +162,27 @@ public class Controller implements interfaces.Controller {
         model.setPlaylist(playlist);
     }
 
-    // TODO: 05.06.2018 unnötig wegen getSelectionmodel oder so 
+    // TODO: 05.06.2018 unnötig wegen getSelectionmodel oder so
 
 
     @Override
     public void backbtn(View view) {
-        if (tmp.getId() < 0) {
-            if (tmp.getId() + 1 < 0) { //solange es noch nächsten song gibt
-                playSong((Song) model.getPlaylist().findSongByID(tmp.getId() + 1), view);
-                tmp = (Song) model.getPlaylist().findSongByID(tmp.getId() + 1);
+        if (s.getId() < 0) {
+            if (s.getId() + 1 < 0) { //solange es noch nächsten song gibt
+                playSong((Song) model.getPlaylist().findSongByID(s.getId() + 1), view);
+                s = (Song) model.getPlaylist().findSongByID(s.getId() + 1);
             }
         }
-        if (tmp.getId() > 0) {
-            if (tmp.getId() - 1 > 0) {
-                playSong((Song)model.getAllSongs().findSongByID(tmp.getId() - 1), view);
-                tmp = (Song)model.getAllSongs().findSongByID(tmp.getId() - 1);
+        if (s.getId() > 0) {
+            if (s.getId() - 1 > 0) {
+                playSong((Song) model.getAllSongs().findSongByID(s.getId() - 1), view);
+                s = (Song) model.getAllSongs().findSongByID(s.getId() - 1);
             }
         }
         currentduration = null;
     }
 
-    // TODO: 05.06.2018 updatePlaylistview weg 
+    // TODO: 05.06.2018 updatePlaylistview weg
 
     @Override
     public void deleteplaylist(View view) {
@@ -192,15 +190,15 @@ public class Controller implements interfaces.Controller {
         updatePlaylistView(view);
     }
 
-    // TODO: 05.06.2018 updateviews weg 
+    // TODO: 05.06.2018 updateviews weg
     @Override
     public void commitbtn(View view) {
         String title = view.getTxtTitle().getText();
         String interpret = view.getTxtInterpret().getText();
         String album = view.getTxtAlbum().getText();
-        tmp.setTitle(title);
-        tmp.setInterpret(interpret);
-        tmp.setAlbum(album);
+        s.setTitle(title);
+        s.setInterpret(interpret);
+        s.setAlbum(album);
 
         updateLibView(view);
         updatePlaylistView(view);
@@ -255,12 +253,9 @@ public class Controller implements interfaces.Controller {
         songFile = new File(s.pathProperty().getValue());
         file = new Media(songFile.toURI().toString());
         player = new MediaPlayer(file);
-        player.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                nextbtn(view);
-                view.setbtnplaypause("|>");
-            }
+        player.setOnEndOfMedia(() -> {
+            nextbtn(view);
+            view.setbtnplaypause("|>");
         });
 
         player.setOnReady(new Runnable() {
@@ -289,21 +284,22 @@ public class Controller implements interfaces.Controller {
 
 
     }
-    public void updatePlaylistView(View view) {
 
+    public void updatePlaylistView(View view) {
+        s = new Song();
         // TODO: 20.05.18 nur wenn song noch nicht vorhanden ist!
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<ListView<Song>, ListCell<Song>>() {
             @Override
             public ListCell<Song> call(ListView<Song> param) {
                 ListCell<Song> cell = new ListCell<Song>() {
                     @Override
-                    protected void updateItem(Song tmp, boolean bln) {
-                        super.updateItem(tmp, bln);
-                        if (tmp != null) {
-                            String tmps = tmp.titleProperty().getValue();
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.titleProperty().getValue();
                             tmps.replace(".mp3", "");
                             setText(tmps);
-                            setId(tmp.getTitle());
+                            setId(s.getTitle());
                         }
                     }
                 };
@@ -313,8 +309,8 @@ public class Controller implements interfaces.Controller {
                     } else {
                         titleCell = cell.getText();
                         idCell = cell.getId();
-                        initClickedSong(view, model.getPlaylist());
-                        view.setTxtTitle(tmp.getTitle());
+                        s = cell.getItem();
+                        view.setTxtTitle(s.getTitle());
 
                     }
                 });
@@ -329,6 +325,7 @@ public class Controller implements interfaces.Controller {
         updateLibView(view);
 
     }
+
     @Override
     public void pauseSong(Song s) {
         player.pause();
@@ -338,14 +335,9 @@ public class Controller implements interfaces.Controller {
     }
 
 
-
-
-
-
-
     @Override
     public void updateLibView(View view) {
-        tmp = new Song();
+        s = new Song();
         view.getSongListView().setCellFactory(new javafx.util.Callback<ListView<Song>, ListCell<Song>>() {
             @Override
             public ListCell<Song> call(ListView<Song> param) {
@@ -369,7 +361,7 @@ public class Controller implements interfaces.Controller {
                         titleCell = cell.getText();
                         idCell = cell.getId();
                         initClickedSong(view, model.getAllSongs());
-                        view.setTxtTitle(tmp.getTitle());
+                        view.setTxtTitle(s.getTitle());
                     }
                 });
                 return cell;
@@ -383,17 +375,13 @@ public class Controller implements interfaces.Controller {
     public void initClickedSong(View view, Playlist playlistLib) {
         //get the Song from allSongs which is represented by the clicked cell
         for (int i = 0; i < playlistLib.size(); i++) {
-            tmp = (Song) playlistLib.get(i);
-            if (tmp.getTitle().contains(idCell)) {
-                view.setTxtAlbum(tmp.getAlbum());
-                view.setTxtInterpret(tmp.getInterpret());
+            s = (Song) playlistLib.get(i);
+            if (s.getTitle().contains(idCell)) {
+                view.setTxtAlbum(s.getAlbum());
+                view.setTxtInterpret(s.getInterpret());
                 return;
             }
         }
     }
 
 }
-
-
-
-

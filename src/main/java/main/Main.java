@@ -21,7 +21,7 @@ public class Main extends Application {
 
         Controller controller = new Controller();
         controller.link(model, view);
-        controller.loadlib("C:/Users/isabe/Desktop/icetunes", new Playlist(), view);
+        controller.loadlib("/Users/darano/mukke/", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 

@@ -40,7 +40,6 @@ public interface Controller {
 
     void loadPlaylist(Playlist playlist) throws RemoteException;
 
-    void initClickedSong(View view, classes.Playlist playlistLib);
 
     void playpauseSong(View view);
 
