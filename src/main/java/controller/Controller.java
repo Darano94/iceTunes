@@ -35,7 +35,6 @@ public class Controller implements interfaces.Controller {
     private Duration fullduration;
     private Duration currentduration;
 
-
     private Song s;
     private Song startSong;
 
@@ -65,8 +64,6 @@ public class Controller implements interfaces.Controller {
         System.out.println("Speichern");
     }
 
-    // TODO: 05.06.2018 model.updateplaylistview auslagern -> ggf unnötig
-
     public void addallbtn(View view) {
         SerializableStrategy strat = new SerializableStrategy();
 
@@ -84,15 +81,11 @@ public class Controller implements interfaces.Controller {
 
     }
 
-
-    // TODO: 05.06.2018 model.updateplaylistview un LibviewUpdate auslagern -> ggf unnötig
     @Override
     public void addtoplaylistbtn(View view) {
 
         try {
             SerializableStrategy strat = new SerializableStrategy();
-
-            initClickedSong(view, model.getAllSongs());
 
 
             strat.writeSong(s);
@@ -162,9 +155,6 @@ public class Controller implements interfaces.Controller {
         model.setPlaylist(playlist);
     }
 
-    // TODO: 05.06.2018 unnötig wegen getSelectionmodel oder so
-
-
     @Override
     public void backbtn(View view) {
         if (s.getId() < 0) {
@@ -182,15 +172,12 @@ public class Controller implements interfaces.Controller {
         currentduration = null;
     }
 
-    // TODO: 05.06.2018 updatePlaylistview weg
-
     @Override
     public void deleteplaylist(View view) {
         model.getPlaylist().clearPlaylist();
         updatePlaylistView(view);
     }
 
-    // TODO: 05.06.2018 updateviews weg
     @Override
     public void commitbtn(View view) {
         String title = view.getTxtTitle().getText();
@@ -205,9 +192,6 @@ public class Controller implements interfaces.Controller {
         updateLibView(view);
     }
 
-    // TODO: 05.06.2018
-
-    // TODO: 05.06.2018
     @Override
     public void loadlib(String path, Playlist allsongs, View view) throws RemoteException {
         model.setAllSongs(new Playlist());
@@ -237,9 +221,6 @@ public class Controller implements interfaces.Controller {
         updatePlaylistView(view);
     }
 
-    // TODO: 05.06.2018
-
-
     @Override
     public void stopsong(View view) {
         player.stop();
@@ -258,72 +239,29 @@ public class Controller implements interfaces.Controller {
             view.setbtnplaypause("|>");
         });
 
-        player.setOnReady(new Runnable() {
-            @Override
-            public void run() {
-                if (ishalted == true) {
-                    player.setStartTime(currentduration);
-                    player.play();
+        player.setOnReady(() -> {
+            if (ishalted == true) {
+                player.setStartTime(currentduration);
+                player.play();
 
 
-                } else {
-                    player.stop();
-                    player.play();
-                }
-                player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                        fullduration = player.getMedia().getDuration();
-                        view.getSlider().setValue(newValue.divide(fullduration.toMillis()).toMillis() * 100.0);
-                        view.setLblcurrentduration(String.valueOf(newValue.toSeconds()));
-                        view.setLblfinalduration(String.valueOf("/   " + player.getTotalDuration().toSeconds()));
-                    }
-                });
+            } else {
+                player.stop();
+                player.play();
             }
+            player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+                fullduration = player.getMedia().getDuration();
+                view.getSlider().setValue(newValue.divide(fullduration.toMillis()).toMillis() * 100.0);
+                view.setLblcurrentduration(String.valueOf(newValue.toSeconds()));
+                view.setLblfinalduration(String.valueOf("/   " + player.getTotalDuration().toSeconds()));
+            });
         });
 
 
     }
 
     public void updatePlaylistView(View view) {
-        s = new Song();
-        // TODO: 20.05.18 nur wenn song noch nicht vorhanden ist!
-        view.getPlaylistView().setCellFactory(new javafx.util.Callback<ListView<Song>, ListCell<Song>>() {
-            @Override
-            public ListCell<Song> call(ListView<Song> param) {
-                ListCell<Song> cell = new ListCell<Song>() {
-                    @Override
-                    protected void updateItem(Song s, boolean bln) {
-                        super.updateItem(s, bln);
-                        if (s != null) {
-                            String tmps = s.titleProperty().getValue();
-                            tmps.replace(".mp3", "");
-                            setText(tmps);
-                            setId(s.getTitle());
-                        }
-                    }
-                };
-                cell.setOnMouseClicked((MouseEvent event) -> {
-                    if (cell.isEmpty()) {
-                        event.consume();
-                    } else {
-                        titleCell = cell.getText();
-                        idCell = cell.getId();
-                        s = cell.getItem();
-                        view.setTxtTitle(s.getTitle());
-
-                    }
-                });
-                return cell;
-
-            }
-        });
-
-
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
-
-        updateLibView(view);
-
     }
 
     @Override
@@ -334,54 +272,16 @@ public class Controller implements interfaces.Controller {
         ishalted = true;
     }
 
+    public void setS(Song s) {
+        this.s = s;
+    }
 
     @Override
     public void updateLibView(View view) {
-        s = new Song();
-        view.getSongListView().setCellFactory(new javafx.util.Callback<ListView<Song>, ListCell<Song>>() {
-            @Override
-            public ListCell<Song> call(ListView<Song> param) {
-                ListCell<Song> cell = new ListCell<Song>() {
-                    @Override
-                    protected void updateItem(Song s, boolean bln) {
-                        super.updateItem(s, bln);
-                        if (s != null) {
-                            String tmps = s.getTitle();
-                            tmps.replace(".mp3", "");
-                            setText(tmps);
-                            setId(s.getTitle());
-                        }
-                    }
-                };
-                //set for each sell a MouseEvent
-                cell.setOnMouseClicked((MouseEvent event) -> {
-                    if (cell.isEmpty()) {
-                        event.consume();
-                    } else {
-                        titleCell = cell.getText();
-                        idCell = cell.getId();
-                        initClickedSong(view, model.getAllSongs());
-                        view.setTxtTitle(s.getTitle());
-                    }
-                });
-                return cell;
-            }
-        });
         view.getSongListView().setItems((ModifiableObservableListBase) model.getAllSongs());
-
     }
 
 
-    public void initClickedSong(View view, Playlist playlistLib) {
-        //get the Song from allSongs which is represented by the clicked cell
-        for (int i = 0; i < playlistLib.size(); i++) {
-            s = (Song) playlistLib.get(i);
-            if (s.getTitle().contains(idCell)) {
-                view.setTxtAlbum(s.getAlbum());
-                view.setTxtInterpret(s.getInterpret());
-                return;
-            }
-        }
-    }
+
 
 }

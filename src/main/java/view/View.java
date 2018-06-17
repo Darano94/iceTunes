@@ -3,6 +3,7 @@ package view;
 import classes.Song;
 import controller.Controller;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -60,6 +61,7 @@ public class View extends BorderPane {
     private VBox vBoxRight2 = new VBox(5, hBoxRight, btnAddToPlaylist);
     private VBox vBoxRightFull = new VBox(10, vBoxRight, vBoxRight2);
 
+    public Song s;
 
     // Methoden
 
@@ -85,6 +87,70 @@ public class View extends BorderPane {
         btndeleteplaylist.setOnAction(e -> controller.deleteplaylist(this));
         btnplaypause.setOnAction(e -> controller.playpauseSong(this));
         btnstop.setOnAction(e -> controller.stopsong(this));
+
+        playlistListView.setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.titleProperty().getValue();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        controller.setS(s);
+                        setTxtTitle(s.getTitle());
+                        setTxtAlbum(s.getAlbum());
+                        setTxtInterpret(s.getInterpret());
+                        System.out.println(s.titleProperty().getValue());
+
+                    }
+                });
+                return cell;
+
+            }
+        });
+        songListView.setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                //set for each sell a MouseEvent
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        controller.setS(s);
+                        setTxtTitle(s.getTitle());
+                        setTxtAlbum(s.getAlbum());
+                        setTxtInterpret(s.getInterpret());
+                        System.out.println(s.titleProperty().getValue());
+                    }
+                });
+                return cell;
+            }
+        });
     }
 
     public void addController(Controller contr) {
