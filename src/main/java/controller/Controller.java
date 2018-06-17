@@ -115,61 +115,55 @@ public class Controller implements interfaces.Controller {
         try {
             SerializableStrategy strat = new SerializableStrategy();
 
+            s.setId(counter);
 
-            strat.writeSong(s);
+            model.getPlaylist().addSong(s);
 
-            AtomicReference<Song> s = new AtomicReference<>((Song) strat.readSong());
-            s.get().setId(counter);
-
-            model.getPlaylist().addSong(s.get());
-
-            strat.openWritablePlaylist();
-            strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
-            strat.closeWritablePlaylist();
-
-            strat.openReadablePlaylist();
-            model.setPlaylist((Playlist) strat.readPlaylist());
-            strat.closeReadablePlaylist();
+//            strat.openWritablePlaylist();
+//            strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
+//            strat.closeWritablePlaylist();
+//
+//            strat.openReadablePlaylist();
+//            model.setPlaylist((Playlist) strat.readPlaylist());
+//            strat.closeReadablePlaylist();
 
             counter--;
-            view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
-            view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
-                @Override
-                public ListCell<Song> call(ListView<Song> param) {
-                    ListCell<Song> cell = new ListCell<Song>() {
-                        @Override
-                        protected void updateItem(Song s, boolean bln) {
-                            super.updateItem(s, bln);
-                            if (s != null) {
-                                String tmps = s.getTitle();
-                                tmps.replace(".mp3", "");
-                                setText(tmps);
-                                setId(s.getTitle());
-                            }
-                        }
-                    };
-                    cell.setOnMouseClicked((MouseEvent event) -> {
-                        if (cell.isEmpty()) {
-                            event.consume();
-                        } else {
-                            s.set(cell.getItem());
-                            setS(s.get());
-                            view.setTxtTitle(s.get().getTitle());
-                            view.setTxtAlbum(s.get().getAlbum());
-                            view.setTxtInterpret(s.get().getInterpret());
-                        }
-                    });
-                    return cell;
-
-                }
-            });
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
         }
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        setS(s);
+                        view.setTxtTitle(s.getTitle());
+                        view.setTxtAlbum(s.getAlbum());
+                        view.setTxtInterpret(s.getInterpret());
+                    }
+                });
+                return cell;
 
-
+            }
+        });
     }
 
     @Override
