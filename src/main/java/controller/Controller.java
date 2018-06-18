@@ -16,7 +16,6 @@ import view.View;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Controller implements interfaces.Controller {
 
@@ -328,6 +327,7 @@ public class Controller implements interfaces.Controller {
         startSong.setPath(startFile.getPath());
         playSong(startSong, view);
         view.getSongListView().setItems((ModifiableObservableListBase) model.getAllSongs());
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
 
     }
 

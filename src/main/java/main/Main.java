@@ -1,13 +1,14 @@
 package main;
 
 
-import classes.Playlist;
-import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Model;
 import view.View;
+import controller.Controller;
+import classes.Playlist;
+
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class Main extends Application {
 
         Controller controller = new Controller();
         controller.link(model, view);
-        controller.loadlib("/Users/darano/mukke/", new Playlist(), view);
+        controller.loadlib("C:/mukke/", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 
