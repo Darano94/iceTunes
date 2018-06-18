@@ -16,6 +16,9 @@ public class Song implements interfaces.Song, Externalizable {
     private transient SimpleStringProperty interpret = new SimpleStringProperty();
     private long id;
 
+    public Song(){
+        this.id = IdGenerator.getNextID();
+    }
 
     @Override
     public String getAlbum() {

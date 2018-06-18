@@ -42,8 +42,6 @@ public class Controller implements interfaces.Controller {
     private File songFile;
 
 
-    public String titleCell, idCell;
-
     //Methoden
 
     @Override
@@ -64,7 +62,6 @@ public class Controller implements interfaces.Controller {
 
     public void addallbtn(View view) {
         SerializableStrategy strat = new SerializableStrategy();
-
         try {
             strat.openWritableLibrary();
             strat.writeLibrary(model.getAllSongs());
@@ -115,22 +112,21 @@ public class Controller implements interfaces.Controller {
             SerializableStrategy strat = new SerializableStrategy();
 
             s.setId(counter);
+            long id = s.getId();
+            Song result = (Song)model.getAllSongs().findSongByID(id);
 
-            model.getPlaylist().addSong(s);
 
-//            strat.openWritablePlaylist();
-//            strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
-//            strat.closeWritablePlaylist();
-//
-//            strat.openReadablePlaylist();
-//            model.setPlaylist((Playlist) strat.readPlaylist());
-//            strat.closeReadablePlaylist();
+            model.getPlaylist().addSong(result);
+
+            strat.openWritablePlaylist();
+            strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
+            strat.closeWritablePlaylist();
+
 
             counter--;
+
         } catch (Exception e) {
             e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
         }
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
@@ -270,6 +266,7 @@ public class Controller implements interfaces.Controller {
         s.setInterpret(interpret);
         s.setAlbum(album);
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().refresh();
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
             @Override
             public ListCell<Song> call(ListView<Song> param) {
@@ -370,7 +367,6 @@ public class Controller implements interfaces.Controller {
 
     }
 
-
     @Override
     public void pauseSong(Song s) {
         player.pause();
@@ -383,14 +379,4 @@ public class Controller implements interfaces.Controller {
         this.s = s;
     }
 
-
-
-    public Playlist getAllSongs(){
-        return model.getAllSongs();
-    }
-
-
-    public Playlist getPlaylist() {
-        return model.getPlaylist();
-    }
 }

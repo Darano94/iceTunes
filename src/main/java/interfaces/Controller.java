@@ -21,7 +21,6 @@ public interface Controller {
 
     void addallbtn(View view);
 
-
     void addtoplaylistbtn(View view);
 
     void nextbtn(View view);
@@ -35,7 +34,6 @@ public interface Controller {
     void loadlib(String path, Playlist allsongs, View view) throws RemoteException;
 
     void loadPlaylist(Playlist playlist) throws RemoteException;
-
 
     void playpauseSong(View view);
 
