@@ -52,24 +52,30 @@ public class Controller implements interfaces.Controller {
     }
 
     @Override
-    public void loadbtn() {
-        System.out.println(model.getPlaylist().size());
+    public void loadbtn(View view) {
+        try {
+            loadPlaylist(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void savebtn() {
-        System.out.println("Speichern");
+        try {
+            savePlaylist();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addallbtn(View view) {
         SerializableStrategy strat = new SerializableStrategy();
         try {
-            strat.openWritableLibrary();
-            strat.writeLibrary(model.getAllSongs());
-            strat.closeWritableLibrary();
-            strat.openReadableLibrary();
-            model.setPlaylist((Playlist) strat.readLibrary());
-            strat.closeReadableLibrary();
+           saveAllSongs();
+           loadAllSongs();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -106,11 +112,70 @@ public class Controller implements interfaces.Controller {
         });
     }
 
+    public void savePlaylist() throws IOException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openWritablePlaylist();
+        strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
+        strat.closeWritablePlaylist();
+
+    }
+
+    public void loadPlaylist(View view) throws IOException, ClassNotFoundException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openReadablePlaylist();
+        model.setPlaylist((Playlist)strat.readPlaylist());
+        strat.closeReadablePlaylist();
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        setS(s);
+                        view.setTxtTitle(s.getTitle());
+                        view.setTxtAlbum(s.getAlbum());
+                        view.setTxtInterpret(s.getInterpret());
+                    }
+                });
+                return cell;
+
+            }
+        });
+
+    }
+    public void saveAllSongs() throws IOException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openWritableLibrary();
+        strat.writeLibrary(model.getAllSongs()); //playlist in datei schreiben und somit abspeichern
+        strat.closeWritableLibrary();
+
+    }
+
+    public void loadAllSongs() throws IOException, ClassNotFoundException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openReadableLibrary();
+        model.setAllSongs((Playlist)strat.readLibrary());
+        strat.closeReadableLibrary();
+    }
     @Override
     public void addtoplaylistbtn(View view) {
 
         try {
-            SerializableStrategy strat = new SerializableStrategy();
 
             s.setId(counter);
             long id = s.getId();
@@ -119,9 +184,7 @@ public class Controller implements interfaces.Controller {
 
             model.getPlaylist().addSong(result);
 
-            strat.openWritablePlaylist();
-            strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
-            strat.closeWritablePlaylist();
+            savePlaylist();
 
 
             counter--;

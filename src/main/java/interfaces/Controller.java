@@ -16,7 +16,7 @@ import java.rmi.RemoteException;
 public interface Controller {
     void link(Model model, View view);
 
-    void loadbtn();
+    void loadbtn(View view);
 
     void savebtn();
 
