@@ -54,7 +54,7 @@ public class SerializableStrategy implements interfaces.SerializableStrategy {
     }
 
     @Override
-    public Song readSong() throws IOException, ClassNotFoundException {
+    public Song readSong() throws IOException, ClassNotFoundException, IDOverflowException {
         fis = new FileInputStream("song.ser");
         ois = new ObjectInputStream(fis);
         songReader = new classes.Song();

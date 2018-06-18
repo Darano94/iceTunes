@@ -1,5 +1,6 @@
 package controller;
 
+import classes.IDOverflowException;
 import classes.Playlist;
 import classes.SerializableStrategy;
 import classes.Song;
@@ -301,20 +302,17 @@ public class Controller implements interfaces.Controller {
     }
 
     @Override
-    public void loadlib(String path, Playlist allsongs, View view) throws RemoteException {
+    public void loadlib(String path, Playlist allsongs, View view) throws RemoteException, IDOverflowException {
         model.setAllSongs(new Playlist());
         f = new File(path);
-        int counter = 0;
         paths = f.listFiles();
         for (File file : paths) {
             if (file.getPath().endsWith(".mp3")) {
-                counter++;
                 s = new Song();
                 s.setTitle(file.getName().replace(".mp3", ""));
                 s.setAlbum("");
                 s.setPath(file.getPath());
                 s.setInterpret("");
-                s.setId(counter);
                 model.getAllSongs().addSong(s);
             }
         }

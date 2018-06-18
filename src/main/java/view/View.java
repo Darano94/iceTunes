@@ -113,6 +113,7 @@ public class View extends BorderPane {
                         setTxtTitle(s.getTitle());
                         setTxtAlbum(s.getAlbum());
                         setTxtInterpret(s.getInterpret());
+
                     }
                 });
                 return cell;
@@ -145,6 +146,7 @@ public class View extends BorderPane {
                         setTxtTitle(s.getTitle());
                         setTxtAlbum(s.getAlbum());
                         setTxtInterpret(s.getInterpret());
+
                     }
                 });
                 return cell;

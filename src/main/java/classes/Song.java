@@ -16,8 +16,17 @@ public class Song implements interfaces.Song, Externalizable {
     private transient SimpleStringProperty interpret = new SimpleStringProperty();
     private long id;
 
-    public Song(){
-        this.id = IdGenerator.getNextID();
+
+    public Song() throws IDOverflowException {
+        IdGenerator idgen = new IdGenerator();
+        long tmp = idgen.getNextID();
+
+        if(tmp >= 0 && tmp <10000) {
+            this.id = tmp;
+        }
+        else {
+            throw new IDOverflowException();
+        }
     }
 
     @Override
