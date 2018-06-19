@@ -3,6 +3,7 @@ package view;
 import classes.IDOverflowException;
 import classes.Song;
 import controller.Controller;
+import javafx.collections.FXCollections;
 import javafx.collections.ModifiableObservableListBase;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -16,26 +17,14 @@ public class View extends BorderPane {
 
     private Controller controller;
 
-    private ChoiceBox choiceBox = new ChoiceBox();
-
     private ListView<Song> songListView = new ListView<>();
     private ListView<Song> playlistListView = new ListView<>();
 
     private Label lblTitle = new Label("Title:");
     private Label lblInterpret = new Label("Interpret:");
     private Label lblAlbum = new Label("Album:");
-
-    public Label getLblcurrentduration() {
-        return lblcurrentduration;
-    }
-
-    private Label lblcurrentduration = new Label("0:00");
-
-    public Label getLblfinalduration() {
-        return lblfinalduration;
-    }
-
     private Label lblfinalduration = new Label("/   "+"0:00");
+    private Label lblcurrentduration = new Label ("0:00");
 
     private TextField txtTitle = new TextField();
     private TextField txtInterpret = new TextField();
@@ -52,11 +41,13 @@ public class View extends BorderPane {
     private Button btnSave = new Button("Save");
     private Button btnAddAll = new Button("Add all");
 
+    private ChoiceBox cboxstrat = new ChoiceBox(FXCollections.observableArrayList("binary", "XML", "JDBC/SQL", "OpenJPA"));
+
     private Slider slider = new Slider();
 
     private HBox hBoxRight = new HBox(10, btnback, btnplaypause, btnstop, btnNext, btnCommit);
     private HBox hboxbottom = new HBox(10, btnAddAll, btndeleteplaylist, lblcurrentduration);
-    private HBox hBoxTop = new HBox(10,choiceBox, btnLoad, btnSave);
+    private HBox hBoxTop = new HBox(10,cboxstrat, btnLoad, btnSave);
     private HBox hBoxTop2 = new HBox(10,slider, lblcurrentduration, lblfinalduration);
     private HBox hboxbox = new HBox(10, hBoxTop,hBoxTop2);
     private VBox vBoxRight = new VBox(2, lblTitle, txtTitle, lblInterpret, txtInterpret, lblAlbum, txtAlbum);
