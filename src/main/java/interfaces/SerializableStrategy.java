@@ -4,6 +4,7 @@ import classes.IDOverFlowException;
 
 import java.io.IOException;
 
+import java.sql.*;
 
 public interface SerializableStrategy {
 
@@ -11,17 +12,17 @@ public interface SerializableStrategy {
     /*
       Setup Serializing the library
      */
-    void openWritableLibrary() throws IOException;
+    void openWritableLibrary() throws SQLException, IOException;
 
     /*
       Setup Deserializing the library
      */
-    void openReadableLibrary() throws IOException;
+    void openReadableLibrary() throws SQLException, IOException;
 
     /*
       Setup Serializing the classes.Playlist
      */
-    void openWritablePlaylist() throws IOException;
+    void openWritablePlaylist() throws  SQLException, IOException;
 
     /*
       Setup Deserializing the classes.Playlist

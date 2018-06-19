@@ -1,76 +1,91 @@
 package classes;
 
-import java.sql.*;
+import interfaces.Playlist;
 import interfaces.SerializableStrategy;
+import interfaces.Song;
 
-public class JDBCStrategy implements SerializableStrategy {
+import java.io.IOException;
+import java.sql.*;
 
-    try {
-        Class.forName("org.sqlite.JDBC");
-    }
-    catch (ClassNotFoundException e) {
-        e.printStackTrace();
-    }
+public class JDBCStrategy implements SerializableStrategy{
+    Connection conlib;
+    Connection conplaylist;
+    PreparedStatement pst;
+    ResultSet resultSet;
 
-    try(Connection con = DriverManager.getConnection("jdbc:sqlite:ice.db")){
-        executeStatement(con);
-    }
-
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-
-    public static executeStatement(Connection con){
-        create(con);
-        delete(con,1);
-        insert (con, 1, "Songname","Playlist",long id,);
-        select(con);
+    @Override
+    public void openWritableLibrary() throws  SQLException {
+        conlib = DriverManager.getConnection("jdbc:sqlite:lib.db");
+        pst = conlib.prepareStatement("CREATE TABLE IF NOT EXISTS  Lib (id long, title text, album text);");
+        pst.execute();
     }
 
-    private static void create(Connection con){
-        try(PreparedStatement pstmt = con.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS ice (id long, name text, interpret text, album text); ")){
-            pstmt.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+    @Override
+    public void openReadableLibrary() throws SQLException {
+        pst = conlib.prepareStatement("SELECT * FROM LIB;");
+        resultSet = pst.executeQuery();
+        //mit resultset können wir lesen : while(resulSet.next()) - sout(resultSet.getText("album");
     }
 
-    private static boolean insert(Connection con, long id, String name,String interpret, String album); {
-        try (PreparedStatement pstmt = con.prepareStatement(
-                "INSERT INTO ice (id, name, interpret, album) VALUES (?,?,?,?);")){
-            pstmt.setLong(1,id);
-            pstmt.setString(2,name);
-            pstmt.setString(3, interpret);
-            pstmt.setString(4,album);
-            pstmt.executeUpdate();
-            return true;
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+    @Override
+    public void openWritablePlaylist() throws SQLException {
+        conplaylist = DriverManager.getConnection("jdbc:sqlite:playlist.db");
+        pst = conplaylist.prepareStatement("CREATE TABLE IF NOT EXISTS  Lib (id long, title text, album text);");
+        pst.execute();
+    }
 
-        private static void delete(Connection con, long id){
-            try(PreparedStatement pstmt = con.prepareStatement(
-                    "DELETE FROM ice WHERE id = ?:")){
-                pstmt.setLong(1,id);
-                pstmt.executeUpdate();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
+    @Override
+    public void openReadablePlaylist() throws IOException {
 
-        private static void select (Connection con){
-            try(PreparedStatement pstmt = con.prepareStatement(
-                    "SELECT * FROM PIZZA;");
-            ResultSet rs = pstmt.executeQuery()){
-                while (rs.next()){
-                    System.out.println(rs.getLong("id"));
-                }
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
+    }
+
+    @Override
+    public void writeSong(Song s) throws IOException {
+
+    }
+
+    @Override
+    public Song readSong() throws IOException, ClassNotFoundException, IDOverFlowException {
+        return null;
+    }
+
+    @Override
+    public void writeLibrary(Playlist p) throws IOException {
+
+    }
+
+    @Override
+    public Playlist readLibrary() throws IOException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public void writePlaylist(Playlist p) throws IOException {
+
+    }
+
+    @Override
+    public Playlist readPlaylist() throws IOException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public void closeWritableLibrary() {
+
+    }
+
+    @Override
+    public void closeReadableLibrary() {
+
+    }
+
+    @Override
+    public void closeWritablePlaylist() {
+
+    }
+
+    @Override
+    public void closeReadablePlaylist() {
 
     }
 }

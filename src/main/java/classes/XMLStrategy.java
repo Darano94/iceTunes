@@ -8,7 +8,8 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
 
-public class XMLSerialization implements interfaces.SerializableStrategy {
+
+public class XMLStrategy implements interfaces.SerializableStrategy {
 
     private FileOutputStream fos = null;
     private XMLEncoder encoder;
