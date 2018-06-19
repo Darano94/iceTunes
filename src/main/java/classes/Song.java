@@ -17,7 +17,8 @@ public class Song implements interfaces.Song, Externalizable {
     private long id;
 
 
-    public Song() throws IDOverflowException {
+
+    public Song() throws IDOverFlowException {
         IdGenerator idgen = new IdGenerator();
         long tmp = idgen.getNextID();
 
@@ -25,7 +26,7 @@ public class Song implements interfaces.Song, Externalizable {
             this.id = tmp;
         }
         else {
-            throw new IDOverflowException();
+            throw new IDOverFlowException();
         }
     }
 

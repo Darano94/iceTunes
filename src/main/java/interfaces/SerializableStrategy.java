@@ -1,6 +1,6 @@
 package interfaces;
 
-import classes.IDOverflowException;
+import classes.IDOverFlowException;
 
 import java.io.IOException;
 
@@ -37,7 +37,7 @@ public interface SerializableStrategy {
     /*
      Read a song from the recently opened medium
      */
-    Song readSong() throws IOException, ClassNotFoundException, IDOverflowException;
+    Song readSong() throws IOException, ClassNotFoundException, IDOverFlowException;
 
     /*
      Write songs from the library by calling writeSong for each classes.Song in library

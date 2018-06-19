@@ -1,8 +1,8 @@
 package controller;
 
-import classes.IDOverflowException;
+import classes.IDOverFlowException;
 import classes.Playlist;
-import classes.BinaryStrategy;
+import classes.SerializableStrategy;
 import classes.Song;
 import javafx.collections.ModifiableObservableListBase;
 import javafx.scene.control.ListCell;
@@ -53,19 +53,33 @@ public class Controller implements interfaces.Controller {
 
     @Override
     public void loadbtn(View view) {
-
+        try {
+            loadPlaylist(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void savebtn() {
-
+        try {
+            savePlaylist();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+
     public void addallbtn(View view) {
-
-        model.setPlaylist(model.getAllSongs());
-
-
+        SerializableStrategy strat = new SerializableStrategy();
+        try {
+           saveAllSongs();
+           loadAllSongs();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
             @Override
@@ -99,12 +113,86 @@ public class Controller implements interfaces.Controller {
         });
     }
 
+    public void savePlaylist() throws IOException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openWritablePlaylist();
+        strat.writePlaylist(model.getPlaylist()); //playlist in datei schreiben und somit abspeichern
+        strat.closeWritablePlaylist();
 
+    }
+
+    public void loadPlaylist(View view) throws IOException, ClassNotFoundException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openReadablePlaylist();
+        model.setPlaylist((Playlist)strat.readPlaylist());
+        strat.closeReadablePlaylist();
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        setS(s);
+                        view.setTxtTitle(s.getTitle());
+                        view.setTxtAlbum(s.getAlbum());
+                        view.setTxtInterpret(s.getInterpret());
+                    }
+                });
+                return cell;
+
+            }
+        });
+
+    }
+    public void saveAllSongs() throws IOException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openWritableLibrary();
+        strat.writeLibrary(model.getAllSongs()); //playlist in datei schreiben und somit abspeichern
+        strat.closeWritableLibrary();
+
+    }
+
+    public void loadAllSongs() throws IOException, ClassNotFoundException {
+        SerializableStrategy strat = new SerializableStrategy();
+        strat.openReadableLibrary();
+        model.setAllSongs((Playlist)strat.readLibrary());
+        strat.closeReadableLibrary();
+    }
     @Override
     public void addtoplaylistbtn(View view) {
-        s.setId(counter);
-        model.getPlaylist().addSong(s);
-        counter--;
+
+        try {
+
+            s.setId(counter);
+            long id = s.getId();
+            Song result = (Song)model.getAllSongs().findSongByID(id);
+
+
+            model.getPlaylist().addSong(result);
+
+            savePlaylist();
+
+
+            counter--;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
             @Override
@@ -200,10 +288,7 @@ public class Controller implements interfaces.Controller {
 
     @Override
     public void deleteplaylist(View view) {
-        while (model.getPlaylist().iterator().hasNext()) {
-            model.getPlaylist().deleteSong(model.getPlaylist().iterator().next());
-        }
-
+        model.getPlaylist().clearPlaylist();
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
             @Override
@@ -281,7 +366,7 @@ public class Controller implements interfaces.Controller {
     }
 
     @Override
-    public void loadlib(String path, Playlist allsongs, View view) throws RemoteException, IDOverflowException {
+    public void loadlib(String path, Playlist allsongs, View view) throws RemoteException, IDOverFlowException {
         model.setAllSongs(new Playlist());
         f = new File(path);
         paths = f.listFiles();
@@ -296,10 +381,10 @@ public class Controller implements interfaces.Controller {
             }
         }
         //play sound bei programmstart
-//        startFile = new File("res/iceicebaby.mp3");
-//        startSong = new Song();
-//        startSong.setPath(startFile.getPath());
-//        playSong(startSong, view);
+        startFile = new File("res/iceicebaby.mp3");
+        startSong = new Song();
+        startSong.setPath(startFile.getPath());
+        playSong(startSong, view);
         view.getSongListView().setItems((ModifiableObservableListBase) model.getAllSongs());
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
 

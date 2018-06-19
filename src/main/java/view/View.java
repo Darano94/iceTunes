@@ -1,6 +1,6 @@
 package view;
 
-import classes.IDOverflowException;
+import classes.IDOverFlowException;
 import classes.Song;
 import controller.Controller;
 import javafx.collections.ModifiableObservableListBase;
@@ -91,7 +91,7 @@ public class View extends BorderPane {
         btnstop.setOnAction(e -> controller.stopsong(this));
         try {
             s = new Song();
-        } catch (IDOverflowException e) {
+        } catch (IDOverFlowException e) {
             e.printStackTrace();
         }
         playlistListView.setCellFactory(new javafx.util.Callback<>() {
@@ -211,4 +211,3 @@ public class View extends BorderPane {
     }
 
 }
-
