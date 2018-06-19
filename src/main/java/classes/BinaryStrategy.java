@@ -1,99 +1,99 @@
 package classes;
 
+        import interfaces.Playlist;
+        import interfaces.Song;
 
-import interfaces.Playlist;
-import interfaces.Song;
+        import java.io.*;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.*;
+public class BinaryStrategy implements interfaces.SerializableStrategy {
+    public static final long serialVersionUID = 4L;
 
-public class XMLSerialization implements interfaces.SerializableStrategy {
-
+    /*
+        Vars
+     */
     private FileOutputStream fos = null;
-    private XMLEncoder encoder;
-    private XMLDecoder decoder;
+    private ObjectOutputStream oos = null;
     private FileInputStream fis = null;
+    private ObjectInputStream ois = null;
     private classes.Playlist playlistReader = null;
     private classes.Song songReader = null;
 
+    /*
+        Methods
+     */
     @Override
     public void openWritableLibrary() throws IOException {
         fos = new FileOutputStream("lib.ser");
-             encoder = new XMLEncoder(fos);
-        }
-
-
+        oos = new ObjectOutputStream(fos);
+    }
 
     @Override
     public void openReadableLibrary() throws IOException {
         fis = new FileInputStream("lib.ser");
-         decoder = new XMLDecoder(fis);
+        ois = new ObjectInputStream(fis);
     }
 
     @Override
     public void openWritablePlaylist() throws IOException {
         fos = new FileOutputStream("playlist.ser");
-             encoder = new XMLEncoder(fos);
+        oos = new ObjectOutputStream(fos);
     }
 
     @Override
     public void openReadablePlaylist() throws IOException {
-        fis  = new FileInputStream("playlist.ser");
-              decoder = new XMLDecoder(fis);
+        fis = new FileInputStream("playlist.ser");
+        ois = new ObjectInputStream(fis);
     }
 
     @Override
     public void writeSong(Song s) throws IOException {
         fos = new FileOutputStream("song.ser");
-        encoder = new XMLEncoder(fos);
-            encoder.writeObject(s); //??
-            encoder.flush();
+        oos = new ObjectOutputStream(fos);
+        oos.writeObject(s);
+        oos.flush();
+
 
     }
 
     @Override
     public Song readSong() throws IOException, ClassNotFoundException, IDOverFlowException {
         fis = new FileInputStream("song.ser");
-              decoder = new XMLDecoder(fis);
-            songReader = new classes.Song();
-            songReader = (classes.Song) decoder.readObject();
+        ois = new ObjectInputStream(fis);
+        songReader = new classes.Song();
+        songReader = (classes.Song)ois.readObject();
+
         return songReader;
-}
+    }
+
     @Override
     public void writeLibrary(Playlist p) throws IOException {
-
-        encoder.writeObject(p);
-        encoder.flush();
+        oos.writeObject(p);
+        oos.flush();
     }
 
     @Override
     public Playlist readLibrary() throws IOException, ClassNotFoundException {
-
         playlistReader = new classes.Playlist();
-        playlistReader = (classes.Playlist) decoder.readObject();
+        playlistReader = (classes.Playlist) ois.readObject();
         return playlistReader;
     }
 
     @Override
     public void writePlaylist(Playlist p) throws IOException {
-
-        encoder.writeObject(p);
-        encoder.flush();
+        oos.writeObject(p);
+        oos.flush();
     }
 
     @Override
     public Playlist readPlaylist() throws IOException, ClassNotFoundException {
-
-        playlistReader = (classes.Playlist) decoder.readObject();
+        playlistReader = (classes.Playlist) ois.readObject();
         return playlistReader;
     }
 
     @Override
     public void closeWritableLibrary() {
-
         try {
-            encoder.close();
+            oos.close();
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,9 +102,8 @@ public class XMLSerialization implements interfaces.SerializableStrategy {
 
     @Override
     public void closeReadableLibrary() {
-
         try {
-            decoder.close();
+            ois.close();
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,9 +112,8 @@ public class XMLSerialization implements interfaces.SerializableStrategy {
 
     @Override
     public void closeWritablePlaylist() {
-
         try {
-            encoder.close();
+            oos.close();
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,13 +122,11 @@ public class XMLSerialization implements interfaces.SerializableStrategy {
 
     @Override
     public void closeReadablePlaylist() {
-
         try {
-            decoder.close();
+            ois.close();
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
-
