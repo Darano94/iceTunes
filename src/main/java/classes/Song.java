@@ -9,6 +9,7 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
 @Entity()
 public class Song implements interfaces.Song, Externalizable {
 
@@ -32,8 +33,8 @@ public class Song implements interfaces.Song, Externalizable {
         }
     }
 
-    @Override
 
+    @Override
     public String getAlbum() {
         return this.album.get();
     }
@@ -43,8 +44,8 @@ public class Song implements interfaces.Song, Externalizable {
         this.album.setValue(album);
     }
 
-    @Override
 
+    @Override
     public String getInterpret() {
         return this.interpret.get();
     }
@@ -54,8 +55,8 @@ public class Song implements interfaces.Song, Externalizable {
         this.interpret.setValue(interpret);
     }
 
-    @Override
 
+    @Override
     public String getPath() {
         return this.path.toString();
     }
@@ -65,8 +66,8 @@ public class Song implements interfaces.Song, Externalizable {
         this.path.setValue(path);
     }
 
-    @Override
 
+    @Override
     public String getTitle() {
         return this.title.get();
     }
@@ -76,8 +77,8 @@ public class Song implements interfaces.Song, Externalizable {
         this.title.setValue(title);
     }
 
-    @Override
     @Id
+    @Override
     public long getId() {
         return this.id;
     }

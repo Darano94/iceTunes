@@ -22,7 +22,7 @@ public class Main extends Application {
 
         Controller controller = new Controller();
         controller.link(model, view);
-        controller.loadlib("/Users/Darano/mukke/", new Playlist(), view);
+        controller.loadlib("C:/Users/Maxbi/Desktop/IceTunes", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 
