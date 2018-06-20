@@ -55,8 +55,9 @@ public class OpenJPAStrategy implements SerializableStrategy {
     public Song readSong() throws IOException, ClassNotFoundException, IDOverFlowException {
         t = e.getTransaction();
         t.begin();
+        String aa = "SELECT id, title, interpret, album, path FROM lib";
         Song a = null;
-        for (Object s : e.createQuery("SELECT id, title, interpret, album, path FROM lib").getResultList()) {
+        for (Object s : e.createQuery(aa.toString()).getResultList()) {
             a = (Song) s;
 
         }
@@ -79,19 +80,24 @@ public class OpenJPAStrategy implements SerializableStrategy {
     public Playlist readLibrary() throws IOException, ClassNotFoundException {
         t= e.getTransaction();
         t.begin();
-        classes.Playlist p = null;
+        String aa = "SELECT * FROM lib";
+        classes.Playlist a = null;
+        for (Object s : e.createQuery(aa.toString()).getResultList()) {
+            a = (classes.Playlist)s;
+        }
+
         t.commit();
-        return p;
+        return a;
     }
 
     @java.lang.Override
     public void writePlaylist(Playlist p) throws IOException {
-
+        writeLibrary(p);
     }
 
     @java.lang.Override
     public Playlist readPlaylist() throws IOException, ClassNotFoundException {
-        return null;
+        return readLibrary();
     }
 
     @java.lang.Override

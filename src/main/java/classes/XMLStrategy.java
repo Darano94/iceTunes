@@ -20,7 +20,7 @@ public class XMLStrategy implements interfaces.SerializableStrategy {
 
     @Override
     public void openWritableLibrary() throws IOException {
-        fos = new FileOutputStream("lib.ser");
+        fos = new FileOutputStream("lib.xml");
              encoder = new XMLEncoder(fos);
         }
 
@@ -28,25 +28,25 @@ public class XMLStrategy implements interfaces.SerializableStrategy {
 
     @Override
     public void openReadableLibrary() throws IOException {
-        fis = new FileInputStream("lib.ser");
+        fis = new FileInputStream("lib.xml");
          decoder = new XMLDecoder(fis);
     }
 
     @Override
     public void openWritablePlaylist() throws IOException {
-        fos = new FileOutputStream("playlist.ser");
+        fos = new FileOutputStream("playlist.xml");
              encoder = new XMLEncoder(fos);
     }
 
     @Override
     public void openReadablePlaylist() throws IOException {
-        fis  = new FileInputStream("playlist.ser");
+        fis  = new FileInputStream("playlist.xml");
               decoder = new XMLDecoder(fis);
     }
 
     @Override
     public void writeSong(Song s) throws IOException {
-        fos = new FileOutputStream("song.ser");
+        fos = new FileOutputStream("song.xml");
         encoder = new XMLEncoder(fos);
             encoder.writeObject(s); //??
             encoder.flush();
@@ -55,7 +55,7 @@ public class XMLStrategy implements interfaces.SerializableStrategy {
 
     @Override
     public Song readSong() throws IOException, ClassNotFoundException, IDOverFlowException {
-        fis = new FileInputStream("song.ser");
+        fis = new FileInputStream("song.xml");
               decoder = new XMLDecoder(fis);
             songReader = new classes.Song();
             songReader = (classes.Song) decoder.readObject();

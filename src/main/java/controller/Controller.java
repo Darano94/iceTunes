@@ -328,6 +328,7 @@ public class Controller implements interfaces.Controller {
 
 
     public void addallbtn(View view) {
+        model.setPlaylist(model.getAllSongs());
         view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
         view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
             @Override
