@@ -156,6 +156,8 @@ public class Controller implements interfaces.Controller {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
 
                 view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
@@ -200,6 +202,8 @@ public class Controller implements interfaces.Controller {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
 

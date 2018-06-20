@@ -79,6 +79,11 @@ public class View extends BorderPane {
         btndeleteplaylist.setOnAction(e -> controller.deleteplaylist(this));
         btnplaypause.setOnAction(e -> controller.playpauseSong(this));
         btnstop.setOnAction(e -> controller.stopsong(this));
+
+        cboxstrat.setTooltip(new Tooltip("Speichermethode auswählen."));
+        cboxstrat.getSelectionModel().selectFirst();
+
+
         try {
             s = new Song();
         } catch (IDOverFlowException e) {
