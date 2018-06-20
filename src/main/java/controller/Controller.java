@@ -245,7 +245,11 @@ public class Controller implements interfaces.Controller {
         switch (strat){
             case "binary":
                BinaryStrategy strategy = new BinaryStrategy();
-               strategy.closeWritablePlaylist();
+                try {
+                    strategy.openWritablePlaylist();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 try {
                     strategy.writePlaylist(model.getPlaylist());
                     strategy.closeWritablePlaylist();
@@ -256,7 +260,11 @@ public class Controller implements interfaces.Controller {
 
             case "XML":
                 XMLStrategy strategy1 = new XMLStrategy();
-                strategy1.closeWritablePlaylist();
+                try {
+                    strategy1.openWritablePlaylist();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 try {
                     strategy1.writePlaylist(model.getPlaylist());
                     strategy1.closeWritablePlaylist();
@@ -268,7 +276,13 @@ public class Controller implements interfaces.Controller {
 
             case "JDBC/SQL":
                 JDBCStrategy strategy2 = new JDBCStrategy();
-                strategy2.closeWritablePlaylist();
+                try {
+                    strategy2.openWritablePlaylist();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 try {
                     strategy2.writePlaylist(model.getPlaylist());
                     strategy2.closeWritablePlaylist();
@@ -279,7 +293,13 @@ public class Controller implements interfaces.Controller {
 
             case "OpenJPA":
                 OpenJPAStrategy strategy3 = new OpenJPAStrategy();
-                strategy3.closeWritablePlaylist();
+                try {
+                    strategy3.openWritablePlaylist();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 try {
                     strategy3.writePlaylist(model.getPlaylist());
                     strategy3.closeWritablePlaylist();
