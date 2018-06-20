@@ -6,29 +6,33 @@ import interfaces.Song;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class OpenJPAStrategy implements SerializableStrategy {
 
-    EntityManagerFactory fac = Persistence.createEntityManagerFactory("openjpa");
-    EntityManager e = fac.createEntityManager();
+    EntityManagerFactory fac;
+    EntityManager e;
+    EntityTransaction t;
 
     @Override
     public void openWritableLibrary() throws SQLException, IOException {
+        fac = Persistence.createEntityManagerFactory("openjpa");
+        e = fac.createEntityManager();
 
     }
 
     @Override
     public void openReadableLibrary() throws SQLException, IOException {
-
+        fac = Persistence.createEntityManagerFactory("openjpa");
+        e = fac.createEntityManager();
     }
 
     @Override
     public void openWritablePlaylist() throws SQLException, IOException {
-
-    }
+}
 
     @Override
     public void openReadablePlaylist() throws IOException, SQLException {
@@ -37,21 +41,36 @@ public class OpenJPAStrategy implements SerializableStrategy {
 
     @Override
     public void writeSong(Song s) throws IOException {
-
+       t = e.getTransaction();
+       t.begin();
+       e.persist(s);
+       t.commit();
     }
 
     @Override
     public Song readSong() throws IOException, ClassNotFoundException, IDOverFlowException {
-        return null;
+        Song a;
+        t = e.getTransaction();
+        t.begin();
+
+        for (Object s : e.createQuery("SELECT id, title, interpret, album, path FROM lib").getResultList()){
+            a = (classes.Song) s;
+        }
+        t.commit();
+        return a;
     }
 
     @Override
     public void writeLibrary(Playlist p) throws IOException {
+        fac = Persistence.createEntityManagerFactory("openjpa");
+        e = fac.createEntityManager();
 
     }
 
     @Override
     public Playlist readLibrary() throws IOException, ClassNotFoundException {
+        fac = Persistence.createEntityManagerFactory("openjpa");
+        e = fac.createEntityManager();
         return null;
     }
 

@@ -33,7 +33,7 @@ public class Song implements interfaces.Song, Externalizable {
         }
     }
 
-    @Id
+
     @Override
     public String getAlbum() {
         return this.album.get();
@@ -44,7 +44,7 @@ public class Song implements interfaces.Song, Externalizable {
         this.album.setValue(album);
     }
 
-    @Id
+
     @Override
     public String getInterpret() {
         return this.interpret.get();
@@ -55,7 +55,7 @@ public class Song implements interfaces.Song, Externalizable {
         this.interpret.setValue(interpret);
     }
 
-    @Id
+
     @Override
     public String getPath() {
         return this.path.toString();
@@ -66,7 +66,7 @@ public class Song implements interfaces.Song, Externalizable {
         this.path.setValue(path);
     }
 
-    @Id
+
     @Override
     public String getTitle() {
         return this.title.get();
