@@ -67,12 +67,21 @@ public class OpenJPAStrategy implements SerializableStrategy {
 
     @java.lang.Override
     public void writeLibrary(Playlist p) throws IOException {
-
+    fac = Persistence.createEntityManagerFactory("openjpa");
+    e = fac.createEntityManager();
+    t = e.getTransaction();
+    t.begin();
+    e.persist(p);
+    t.commit();
     }
 
     @java.lang.Override
     public Playlist readLibrary() throws IOException, ClassNotFoundException {
-        return null;
+        t= e.getTransaction();
+        t.begin();
+        classes.Playlist p = null;
+        t.commit();
+        return p;
     }
 
     @java.lang.Override
@@ -87,12 +96,14 @@ public class OpenJPAStrategy implements SerializableStrategy {
 
     @java.lang.Override
     public void closeWritableLibrary() {
-
+    e.close();
+    fac.close();
     }
 
     @java.lang.Override
     public void closeReadableLibrary() {
-
+    e.close();
+    fac.close();
     }
 
     @java.lang.Override
