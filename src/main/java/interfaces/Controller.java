@@ -1,5 +1,6 @@
 package interfaces;
 
+
 import classes.IDOverFlowException;
 import classes.Playlist;
 import javafx.beans.value.ChangeListener;
@@ -32,7 +33,7 @@ public interface Controller {
 
     void commitbtn(View view);
 
-    void loadlib(String path, Playlist allsongs, View view) throws RemoteException, IDOverFlowException, IDOverFlowException;
+    void loadlib(String path, Playlist allsongs, View view) throws RemoteException, IDOverFlowException;
 
     void loadPlaylist(Playlist playlist) throws RemoteException;
 
