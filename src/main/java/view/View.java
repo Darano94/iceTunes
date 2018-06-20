@@ -4,7 +4,6 @@ import classes.IDOverFlowException;
 import classes.Song;
 import controller.Controller;
 import javafx.collections.FXCollections;
-import javafx.collections.ModifiableObservableListBase;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -71,7 +70,7 @@ public class View extends BorderPane {
         // Button Events
 
         btnLoad.setOnAction(e -> controller.loadbtn(this));
-        btnSave.setOnAction(e -> controller.savebtn());
+        btnSave.setOnAction(e -> controller.savebtn(this));
         btnAddAll.setOnAction(e -> controller.addallbtn(this));
         btnAddToPlaylist.setOnAction(e -> controller.addtoplaylistbtn(this));
         btnCommit.setOnAction(e -> controller.commitbtn(this));
@@ -159,6 +158,11 @@ public class View extends BorderPane {
 
     public Slider getSlider() {
         return slider;
+    }
+
+    public String getCboxstrat(){
+        String stratname = cboxstrat.getSelectionModel().getSelectedItem().toString();
+        return stratname;
     }
 
     public void setLblcurrentduration(String string){

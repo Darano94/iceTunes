@@ -18,7 +18,7 @@ public interface Controller {
 
     void loadbtn(View view);
 
-    void savebtn();
+    void savebtn(View view);
 
     void addallbtn(View view);
 
