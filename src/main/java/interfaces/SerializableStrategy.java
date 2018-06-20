@@ -27,7 +27,7 @@ public interface SerializableStrategy {
     /*
       Setup Deserializing the classes.Playlist
      */
-    void openReadablePlaylist() throws IOException;
+    void openReadablePlaylist() throws IOException, SQLException;
 
 
     /*
