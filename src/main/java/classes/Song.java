@@ -3,11 +3,14 @@ package classes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+@Entity()
 public class Song implements interfaces.Song, Externalizable {
 
     private transient SimpleStringProperty path = new SimpleStringProperty();
@@ -30,6 +33,7 @@ public class Song implements interfaces.Song, Externalizable {
         }
     }
 
+    @Id
     @Override
     public String getAlbum() {
         return this.album.get();
@@ -40,6 +44,7 @@ public class Song implements interfaces.Song, Externalizable {
         this.album.setValue(album);
     }
 
+    @Id
     @Override
     public String getInterpret() {
         return this.interpret.get();
@@ -50,6 +55,7 @@ public class Song implements interfaces.Song, Externalizable {
         this.interpret.setValue(interpret);
     }
 
+    @Id
     @Override
     public String getPath() {
         return this.path.toString();
@@ -60,6 +66,7 @@ public class Song implements interfaces.Song, Externalizable {
         this.path.setValue(path);
     }
 
+    @Id
     @Override
     public String getTitle() {
         return this.title.get();
@@ -70,6 +77,7 @@ public class Song implements interfaces.Song, Externalizable {
         this.title.setValue(title);
     }
 
+    @Id
     @Override
     public long getId() {
         return this.id;
