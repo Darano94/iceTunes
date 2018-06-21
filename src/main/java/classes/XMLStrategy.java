@@ -84,7 +84,7 @@ public class XMLStrategy implements interfaces.SerializableStrategy {
     }
 
     @Override
-    public Playlist readPlaylist() throws IOException, ClassNotFoundException {
+    public classes.Playlist readPlaylist() throws IOException, ClassNotFoundException {
 
         playlistReader = (classes.Playlist) decoder.readObject();
         return playlistReader;

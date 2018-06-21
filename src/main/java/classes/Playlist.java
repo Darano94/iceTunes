@@ -6,9 +6,11 @@ package classes;/*
 import interfaces.Song;
 import javafx.collections.ModifiableObservableListBase;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+@Entity()
 public class Playlist extends ModifiableObservableListBase<Song> implements interfaces.Playlist {
     /*
       Vars
@@ -34,6 +36,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
     public int size() {
         return songArrayList.size();
     }
+
 
     @Override
     public Song get(int index) {
@@ -93,7 +96,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
         }
         return null;
     }
-
+    @Id
     @Override
     public Song findSongByID(long id) {
         for (interfaces.Song s:songArrayList){

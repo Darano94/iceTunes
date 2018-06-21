@@ -136,7 +136,7 @@ public class JDBCStrategy implements SerializableStrategy{
     }
 
     @Override
-    public Playlist readPlaylist() throws IOException, ClassNotFoundException {
+    public classes.Playlist readPlaylist() throws IOException, ClassNotFoundException {
         classes.Playlist p1 = new classes.Playlist();
         try {
             pst = connection.prepareStatement("SELECT * FROM playlist");

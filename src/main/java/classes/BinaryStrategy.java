@@ -85,7 +85,7 @@ public class BinaryStrategy implements interfaces.SerializableStrategy {
     }
 
     @Override
-    public Playlist readPlaylist() throws IOException, ClassNotFoundException {
+    public classes.Playlist readPlaylist() throws IOException, ClassNotFoundException {
         playlistReader = (classes.Playlist) ois.readObject();
         return playlistReader;
     }
