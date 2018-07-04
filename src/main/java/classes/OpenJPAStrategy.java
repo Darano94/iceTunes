@@ -8,7 +8,6 @@ import org.apache.openjpa.util.Serialization;
 
 import org.apache.openjpa.persistence.OpenJPAPersistence;
 
-
 import javax.persistence.EntityManager;
 
 import javax.persistence.EntityManagerFactory;
@@ -71,7 +70,7 @@ public static EntityManagerFactory getWithoutConfig() {
 
            }
 
-    //
+
       map.put("openjpa.MetaDataFactory", "jpa(Types=" + buf.toString()+ ")");
 
             }
@@ -108,8 +107,7 @@ public static EntityManagerFactory getWithoutConfig() {
     @java.lang.Override
     public void writeSong(Song s) throws IOException {
     //fac = Persistence.createEntityManagerFactory("openjpa");
-        fac = getWithoutConfig();
-    e = fac.createEntityManager();
+
     t = e.getTransaction();
     t.begin();
     e.persist(s);
@@ -134,8 +132,6 @@ public static EntityManagerFactory getWithoutConfig() {
     @java.lang.Override
     public void writeLibrary(Playlist p) throws IOException {
     //fac = Persistence.createEntityManagerFactory("openjpa");
-        fac = getWithoutConfig();
-    e = fac.createEntityManager();
     t = e.getTransaction();
     t.begin();
     e.persist(p);
@@ -144,9 +140,10 @@ public static EntityManagerFactory getWithoutConfig() {
 
     @java.lang.Override
     public Playlist readLibrary() throws IOException, ClassNotFoundException {
+
         t= e.getTransaction();
         t.begin();
-        String aa = "SELECT * FROM lib";
+        String aa = "SELECT x FROM Playlist x";
         classes.Playlist a = null;
         for (Object s : e.createQuery(aa.toString()).getResultList()) {
             a = (classes.Playlist)s;
@@ -163,7 +160,7 @@ public static EntityManagerFactory getWithoutConfig() {
 
     @java.lang.Override
     public Playlist readPlaylist() throws IOException, ClassNotFoundException {
-        return readLibrary();
+      return readLibrary();
     }
 
     @java.lang.Override

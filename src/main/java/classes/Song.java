@@ -4,19 +4,23 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 @Entity()
+@Table(name = "song")
 public class Song implements interfaces.Song, Externalizable {
 
     private transient SimpleStringProperty path = new SimpleStringProperty();
     private transient SimpleStringProperty title = new SimpleStringProperty();
     private transient SimpleStringProperty album = new SimpleStringProperty();
     private transient SimpleStringProperty interpret = new SimpleStringProperty();
+    @GeneratedValue
     private long id;
 
 
