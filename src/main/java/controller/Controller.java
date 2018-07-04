@@ -1,6 +1,7 @@
 package controller;
 
 import classes.*;
+import interfaces.SerializableStrategy;
 import javafx.collections.ModifiableObservableListBase;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -9,6 +10,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import model.Model;
+import org.apache.openjpa.jdbc.meta.Strategy;
 import view.View;
 
 import java.io.File;
@@ -53,264 +55,111 @@ public class Controller implements interfaces.Controller {
 
     @Override
     public void loadbtn(View view) {
+        SerializableStrategy strategy;
         strat = view.getCboxstrat();
         switch (strat){
             case "binary":
-                BinaryStrategy strategy = new BinaryStrategy();
-                try {
-                    strategy.openReadablePlaylist();
-                    model.setPlaylist((Playlist) strategy.readPlaylist());
-                    strategy.closeReadablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
-                view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
-                    @Override
-                    public ListCell<Song> call(ListView<Song> param) {
-                        ListCell<Song> cell = new ListCell<Song>() {
-                            @Override
-                            protected void updateItem(Song s, boolean bln) {
-                                super.updateItem(s, bln);
-                                if (s != null) {
-                                    String tmps = s.getTitle();
-                                    tmps.replace(".mp3", "");
-                                    setText(tmps);
-                                    setId(s.getTitle());
-                                }
-                            }
-                        };
-                        cell.setOnMouseClicked((MouseEvent event) -> {
-                            if (cell.isEmpty()) {
-                                event.consume();
-                            } else {
-                                s = cell.getItem();
-                                setS(s);
-                                view.setTxtTitle(s.getTitle());
-                                view.setTxtAlbum(s.getAlbum());
-                                view.setTxtInterpret(s.getInterpret());
-                            }
-                        });
-                        return cell;
-
-                    }
-                });
-
+                strategy = new BinaryStrategy();
                 break;
 
             case "XML":
-                XMLStrategy strategy1 = new XMLStrategy();
-                try {
-                    strategy1.openReadablePlaylist();
-                    model.setPlaylist((Playlist) strategy1.readPlaylist());
-                    strategy1.closeReadablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
-                view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
-                    @Override
-                    public ListCell<Song> call(ListView<Song> param) {
-                        ListCell<Song> cell = new ListCell<Song>() {
-                            @Override
-                            protected void updateItem(Song s, boolean bln) {
-                                super.updateItem(s, bln);
-                                if (s != null) {
-                                    String tmps = s.getTitle();
-                                    tmps.replace(".mp3", "");
-                                    setText(tmps);
-                                    setId(s.getTitle());
-                                }
-                            }
-                        };
-                        cell.setOnMouseClicked((MouseEvent event) -> {
-                            if (cell.isEmpty()) {
-                                event.consume();
-                            } else {
-                                s = cell.getItem();
-                                setS(s);
-                                view.setTxtTitle(s.getTitle());
-                                view.setTxtAlbum(s.getAlbum());
-                                view.setTxtInterpret(s.getInterpret());
-                            }
-                        });
-                        return cell;
-
-                    }
-                });
+                strategy = new XMLStrategy();
                 break;
 
             case "JDBC/SQL":
-                JDBCStrategy strategy2 = new JDBCStrategy();
-                try {
-                    strategy2.openReadablePlaylist();
-                    model.setPlaylist((Playlist) strategy2.readPlaylist());
-                    strategy2.closeReadablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
-                view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
-                    @Override
-                    public ListCell<Song> call(ListView<Song> param) {
-                        ListCell<Song> cell = new ListCell<Song>() {
-                            @Override
-                            protected void updateItem(Song s, boolean bln) {
-                                super.updateItem(s, bln);
-                                if (s != null) {
-                                    String tmps = s.getTitle();
-                                    tmps.replace(".mp3", "");
-                                    setText(tmps);
-                                    setId(s.getTitle());
-                                }
-                            }
-                        };
-                        cell.setOnMouseClicked((MouseEvent event) -> {
-                            if (cell.isEmpty()) {
-                                event.consume();
-                            } else {
-                                s = cell.getItem();
-                                setS(s);
-                                view.setTxtTitle(s.getTitle());
-                                view.setTxtAlbum(s.getAlbum());
-                                view.setTxtInterpret(s.getInterpret());
-                            }
-                        });
-                        return cell;
-
-                    }
-                });
+                strategy = new JDBCStrategy();
                 break;
 
             case "OpenJPA":
-                OpenJPAStrategy strategy3 = new OpenJPAStrategy();
-                try {
-                    strategy3.openReadablePlaylist();
-                    model.setPlaylist((Playlist) strategy3.readPlaylist());
-                    strategy3.closeReadablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
-                view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
-                    @Override
-                    public ListCell<Song> call(ListView<Song> param) {
-                        ListCell<Song> cell = new ListCell<Song>() {
-                            @Override
-                            protected void updateItem(Song s, boolean bln) {
-                                super.updateItem(s, bln);
-                                if (s != null) {
-                                    String tmps = s.getTitle();
-                                    tmps.replace(".mp3", "");
-                                    setText(tmps);
-                                    setId(s.getTitle());
-                                }
-                            }
-                        };
-                        cell.setOnMouseClicked((MouseEvent event) -> {
-                            if (cell.isEmpty()) {
-                                event.consume();
-                            } else {
-                                s = cell.getItem();
-                                setS(s);
-                                view.setTxtTitle(s.getTitle());
-                                view.setTxtAlbum(s.getAlbum());
-                                view.setTxtInterpret(s.getInterpret());
-                            }
-                        });
-                        return cell;
-
-                    }
-                });
+                strategy = new OpenJPAStrategy();
                 break;
+
+            default:
+                strategy = new BinaryStrategy();
+
         }
 
+        try {
+            strategy.openReadablePlaylist();
+            model.setPlaylist((Playlist) strategy.readPlaylist());
+            strategy.closeReadablePlaylist();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        view.getPlaylistView().setItems((ModifiableObservableListBase) model.getPlaylist());
+        view.getPlaylistView().setCellFactory(new javafx.util.Callback<>() {
+            @Override
+            public ListCell<Song> call(ListView<Song> param) {
+                ListCell<Song> cell = new ListCell<Song>() {
+                    @Override
+                    protected void updateItem(Song s, boolean bln) {
+                        super.updateItem(s, bln);
+                        if (s != null) {
+                            String tmps = s.getTitle();
+                            tmps.replace(".mp3", "");
+                            setText(tmps);
+                            setId(s.getTitle());
+                        }
+                    }
+                };
+                cell.setOnMouseClicked((MouseEvent event) -> {
+                    if (cell.isEmpty()) {
+                        event.consume();
+                    } else {
+                        s = cell.getItem();
+                        setS(s);
+                        view.setTxtTitle(s.getTitle());
+                        view.setTxtAlbum(s.getAlbum());
+                        view.setTxtInterpret(s.getInterpret());
+                    }
+                });
+                return cell;
+
+            }
+        });
     }
 
     @Override
     public void savebtn(View view) {
+        SerializableStrategy strategy;
         strat = view.getCboxstrat();
         switch (strat){
             case "binary":
-               BinaryStrategy strategy = new BinaryStrategy();
-                try {
-                    strategy.openWritablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    strategy.writePlaylist(model.getPlaylist());
-                    strategy.closeWritablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+               strategy = new BinaryStrategy();
                 break;
 
             case "XML":
-                XMLStrategy strategy1 = new XMLStrategy();
-                try {
-                    strategy1.openWritablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    strategy1.writePlaylist(model.getPlaylist());
-                    strategy1.closeWritablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                strategy = new XMLStrategy();
                 break;
 
             case "JDBC/SQL":
-                JDBCStrategy strategy2 = new JDBCStrategy();
-                try {
-                    strategy2.openWritablePlaylist();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    strategy2.writePlaylist(model.getPlaylist());
-                    strategy2.closeWritablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                strategy = new JDBCStrategy();
                 break;
 
             case "OpenJPA":
-                OpenJPAStrategy strategy3 = new OpenJPAStrategy();
-                try {
-                    strategy3.openWritablePlaylist();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    strategy3.writePlaylist(model.getPlaylist());
-                    strategy3.closeWritablePlaylist();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                strategy = new OpenJPAStrategy();
                 break;
+
+            default: strategy = new BinaryStrategy();
+        }
+
+        try {
+            strategy.openWritablePlaylist();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            strategy.writePlaylist(model.getPlaylist());
+            strategy.closeWritablePlaylist();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 

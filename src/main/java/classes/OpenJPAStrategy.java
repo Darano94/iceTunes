@@ -80,31 +80,31 @@ public static EntityManagerFactory getWithoutConfig() {
 
         }
 
-    @java.lang.Override
+    @Override
     public void openWritableLibrary() throws SQLException, IOException {
     //fac = Persistence.createEntityManagerFactory("openjpa");
     fac = getWithoutConfig();
     e = fac.createEntityManager();
     }
 
-    @java.lang.Override
+    @Override
     public void openReadableLibrary() throws SQLException, IOException {
     //fac = Persistence.createEntityManagerFactory("openjpa");
         fac = getWithoutConfig();
     e = fac.createEntityManager();
     }
 
-    @java.lang.Override
+    @Override
     public void openWritablePlaylist() throws SQLException, IOException {
 
     }
 
-    @java.lang.Override
+    @Override
     public void openReadablePlaylist() throws IOException, SQLException {
 
     }
 
-    @java.lang.Override
+    @Override
     public void writeSong(Song s) throws IOException {
     //fac = Persistence.createEntityManagerFactory("openjpa");
 
@@ -114,7 +114,7 @@ public static EntityManagerFactory getWithoutConfig() {
     t.commit();
     }
 
-    @java.lang.Override
+    @Override
     public Song readSong() throws IOException, ClassNotFoundException, IDOverFlowException {
         t = e.getTransaction();
         t.begin();
@@ -129,7 +129,7 @@ public static EntityManagerFactory getWithoutConfig() {
         return a;
     }
 
-    @java.lang.Override
+    @Override
     public void writeLibrary(Playlist p) throws IOException {
     //fac = Persistence.createEntityManagerFactory("openjpa");
     t = e.getTransaction();
@@ -138,7 +138,7 @@ public static EntityManagerFactory getWithoutConfig() {
     t.commit();
     }
 
-    @java.lang.Override
+    @Override
     public Playlist readLibrary() throws IOException, ClassNotFoundException {
 
         t= e.getTransaction();
@@ -153,34 +153,34 @@ public static EntityManagerFactory getWithoutConfig() {
         return a;
     }
 
-    @java.lang.Override
+    @Override
     public void writePlaylist(Playlist p) throws IOException {
         writeLibrary(p);
     }
 
-    @java.lang.Override
+    @Override
     public Playlist readPlaylist() throws IOException, ClassNotFoundException {
       return readLibrary();
     }
 
-    @java.lang.Override
+    @Override
     public void closeWritableLibrary() {
     e.close();
     fac.close();
     }
 
-    @java.lang.Override
+    @Override
     public void closeReadableLibrary() {
     e.close();
     fac.close();
     }
 
-    @java.lang.Override
+    @Override
     public void closeWritablePlaylist() {
 
     }
 
-    @java.lang.Override
+    @Override
     public void closeReadablePlaylist() {
 
     }
