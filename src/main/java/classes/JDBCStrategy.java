@@ -179,6 +179,7 @@ public class JDBCStrategy implements SerializableStrategy{
             try {
                 rs.close();
                 pst.close();
+                rs.close();
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -190,8 +191,9 @@ public class JDBCStrategy implements SerializableStrategy{
     public void closeWritablePlaylist() {
         if(connection != null){
             try {
-                rs.close();
+
                 pst.close();
+                rs.close();
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -203,12 +205,13 @@ public class JDBCStrategy implements SerializableStrategy{
     public void closeReadablePlaylist() {
         if(connection != null){
             try {
-                rs.close();
                 pst.close();
                 connection.close();
+                rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
         }
     }
 

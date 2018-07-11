@@ -1,6 +1,7 @@
 package main;
 
 
+
         import javafx.application.Application;
         import javafx.scene.Scene;
         import javafx.stage.Stage;
@@ -22,12 +23,13 @@ public class Main extends Application {
 
         Controller controller = new Controller();
         controller.link(model, view);
-        controller.loadlib("C:/Users/Maxbi/Desktop/IceTunes", new Playlist(), view);
+        controller.loadlib("C:/Users/isabe/Desktop/icetunes", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 
         primaryStage.setScene(new Scene(view, 728, 728 / 16 * 9));
         primaryStage.setTitle("iceTunes - ice ice Baby!");
         primaryStage.show();
+
     }
 }
