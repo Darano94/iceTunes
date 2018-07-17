@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.classes.Playlist;
-import server.mvc.Controller;
+import client.mvc.Controller;
 import server.mvc.Model;
 import server.mvc.View;
 
@@ -20,8 +20,10 @@ public class Client extends Application {
         Model model = new Model();
         Controller controller = new Controller();
 
+        controller.loadlib();
+
 //        controller.link(model, view);
-//        controller.loadlib("path", new Playlist(), view);
+
 
 
         primaryStage.setScene(new Scene(view, 728, 728 / 16 * 9));

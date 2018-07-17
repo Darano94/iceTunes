@@ -8,6 +8,7 @@ import server.mvc.*;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface Controller extends Serializable {
     void link(Model model, View view);
@@ -39,4 +40,6 @@ public interface Controller extends Serializable {
     void stopsong(View view);
 
     void pauseSong(server.classes.Song s);
+
+    public ArrayList<Long> sendids() throws RemoteException;
 }

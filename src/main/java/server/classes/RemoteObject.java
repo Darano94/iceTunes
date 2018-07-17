@@ -8,6 +8,7 @@ import server.mvc.View;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 public class RemoteObject extends UnicastRemoteObject implements RemoteInterface {
 
@@ -66,12 +67,10 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
 
     @Override
     public void loadlib(String path, Playlist allsongs) throws RemoteException, IDOverFlowException {
-        contr.loadlib(path, allsongs, view);
     }
 
     @Override
     public void loadPlaylist(Playlist playlist) throws RemoteException {
-        contr.loadPlaylist(playlist);
     }
 
     @Override
@@ -92,6 +91,12 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
     @Override
     public void pauseSong(Song s) throws RemoteException {
         contr.pauseSong(s);
+
+    }
+
+    @Override
+    public ArrayList<Long> ids() throws RemoteException {
+        return contr.sendids();
     }
 
     public RemoteObject(Controller contr, View view) throws RemoteException {

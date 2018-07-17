@@ -22,7 +22,7 @@ public class View2 extends BorderPane {
 
     public View2 () throws RemoteException, NotBoundException, MalformedURLException {
 
-        allSongs = remote.getAllSongs();
+
 
         setCenter(button);
         setLeft(allSongs);

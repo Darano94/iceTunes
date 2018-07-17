@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Controller implements server.interfaces.Controller, Serializable {
 
@@ -38,6 +39,8 @@ public class Controller implements server.interfaces.Controller, Serializable {
     private File startFile;
     private File[] paths;
     private File songFile;
+
+    private ArrayList<Long> ids = new ArrayList();
 
     private String strat;
 
@@ -404,6 +407,7 @@ public class Controller implements server.interfaces.Controller, Serializable {
     public void loadlib(String path, Playlist allsongs, View view) throws IDOverFlowException {
         model.setAllSongs(new Playlist());
         f = new File(path);
+        Long tmp =null;
         paths = f.listFiles();
         for (File file : paths) {
             if (file.getPath().endsWith(".mp3")) {
@@ -413,6 +417,12 @@ public class Controller implements server.interfaces.Controller, Serializable {
                 s.setPath(file.getPath());
                 s.setInterpret("");
                 model.getAllSongs().addSong(s);
+
+                tmp = s.getId();
+                ids.add(tmp);
+                System.out.println(tmp);
+
+
             }
         }
         //play sound bei programmstart
@@ -470,6 +480,11 @@ public class Controller implements server.interfaces.Controller, Serializable {
         currentduration = player.getCurrentTime();
         isplaying = false;
         ishalted = true;
+    }
+
+    @Override
+    public ArrayList<Long> sendids (){
+    return ids;
     }
 
     public void setS(Song s) {
