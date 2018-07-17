@@ -11,33 +11,35 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface RemoteInterface extends Remote {
-    void link(Model model, View view) throws RemoteException;
+    void link(Model model) throws RemoteException;
 
-    void loadbtn(View view)throws RemoteException;
+    void loadbtn()throws RemoteException;
 
-    void savebtn(View view) throws RemoteException;
+    void savebtn() throws RemoteException;
 
-    void addallbtn(View view) throws RemoteException;
+    void addallbtn() throws RemoteException;
 
-    void addtoplaylistbtn(View view) throws RemoteException;
+    void addtoplaylistbtn() throws RemoteException;
 
-    void nextbtn(View view) throws RemoteException;
+    void nextbtn() throws RemoteException;
 
-    void backbtn(View view) throws RemoteException;
+    void backbtn() throws RemoteException;
 
-    void deleteplaylist(View view) throws RemoteException;
+    void deleteplaylist() throws RemoteException;
 
-    void commitbtn(View view) throws RemoteException;
+    void commitbtn() throws RemoteException;
 
-    void loadlib(String path, Playlist allsongs, View view) throws RemoteException, IDOverFlowException;
+    void loadlib(String path, Playlist allsongs) throws RemoteException, IDOverFlowException;
 
     void loadPlaylist(Playlist playlist) throws RemoteException;
 
-    void playpauseSong(View view) throws RemoteException;
+    void playpauseSong() throws RemoteException;
 
-    void playSong(Song s, View view) throws RemoteException;
+    void playSong(Song s) throws RemoteException;
 
-    void stopsong(View view) throws RemoteException;
+    void stopsong() throws RemoteException;
 
     void pauseSong(server.classes.Song s) throws RemoteException;
+
+
 }

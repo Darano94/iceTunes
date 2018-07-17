@@ -23,7 +23,8 @@ public class Server extends Application {
 
 
 
-        Remote remote = new RemoteObject(controller);
+        Remote remote = new RemoteObject(controller, view);
+
         //start rmiregistry;
         LocateRegistry.createRegistry(1099);
         //move object in registry
@@ -32,7 +33,7 @@ public class Server extends Application {
 
 
         controller.link(model, view);
-        controller.loadlib("/Users/darano/mukke", new Playlist(), view);
+        controller.loadlib("C:/Users/Maxbi/Desktop/IceTunes", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 

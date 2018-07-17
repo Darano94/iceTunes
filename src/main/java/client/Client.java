@@ -1,6 +1,7 @@
 package client;
 
 
+import client.mvc.View2;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -15,12 +16,12 @@ public class Client extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
-        View view = new View();
+        View2 view = new View2();
         Model model = new Model();
         Controller controller = new Controller();
 
-        controller.link(model, view);
-        controller.loadlib("path", new Playlist(), view);
+//        controller.link(model, view);
+//        controller.loadlib("path", new Playlist(), view);
 
 
         primaryStage.setScene(new Scene(view, 728, 728 / 16 * 9));

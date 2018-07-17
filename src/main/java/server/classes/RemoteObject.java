@@ -12,54 +12,55 @@ import java.rmi.server.UnicastRemoteObject;
 public class RemoteObject extends UnicastRemoteObject implements RemoteInterface {
 
     Controller contr;
+    View view;
 
     @Override
-    public void link(Model model, View view) throws RemoteException {
+    public void link(Model model) throws RemoteException {
         contr.link(model, view);
     }
 
     @Override
-    public void loadbtn(View view) throws RemoteException {
+    public void loadbtn() throws RemoteException {
         contr.loadbtn(view);
     }
 
     @Override
-    public void savebtn(View view) throws RemoteException {
+    public void savebtn() throws RemoteException {
         contr.savebtn(view);
     }
 
     @Override
-    public void addallbtn(View view) throws RemoteException {
+    public void addallbtn() throws RemoteException {
         contr.addallbtn(view);
     }
 
     @Override
-    public void addtoplaylistbtn(View view) throws RemoteException {
+    public void addtoplaylistbtn() throws RemoteException {
         contr.addtoplaylistbtn(view);
     }
 
     @Override
-    public void nextbtn(View view) throws RemoteException {
+    public void nextbtn() throws RemoteException {
         contr.nextbtn(view);
     }
 
     @Override
-    public void backbtn(View view) throws RemoteException {
+    public void backbtn() throws RemoteException {
         contr.backbtn(view);
     }
 
     @Override
-    public void deleteplaylist(View view) throws RemoteException {
+    public void deleteplaylist() throws RemoteException {
         contr.deleteplaylist(view);
     }
 
     @Override
-    public void commitbtn(View view) throws RemoteException {
+    public void commitbtn() throws RemoteException {
         contr.commitbtn(view);
     }
 
     @Override
-    public void loadlib(String path, Playlist allsongs, View view) throws RemoteException, IDOverFlowException {
+    public void loadlib(String path, Playlist allsongs) throws RemoteException, IDOverFlowException {
         contr.loadlib(path, allsongs, view);
     }
 
@@ -69,17 +70,17 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
     }
 
     @Override
-    public void playpauseSong(View view) throws RemoteException {
+    public void playpauseSong() throws RemoteException {
         contr.playpauseSong(view);
     }
 
     @Override
-    public void playSong(Song s, View view) throws RemoteException {
+    public void playSong(Song s) throws RemoteException {
         contr.playSong(s, view);
     }
 
     @Override
-    public void stopsong(View view) throws RemoteException {
+    public void stopsong() throws RemoteException {
         contr.stopsong(view);
     }
 
@@ -88,7 +89,8 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
         contr.pauseSong(s);
     }
 
-    public RemoteObject(Controller contr) throws RemoteException {
+    public RemoteObject(Controller contr, View view) throws RemoteException {
         this.contr = contr;
+        this.view = view;
     }
 }
