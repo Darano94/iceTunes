@@ -33,7 +33,7 @@ public class Server extends Application {
 
 
         controller.link(model, view);
-        controller.loadlib("C:/Users/Maxbi/Desktop/IceTunes", new Playlist(), view);
+        controller.loadlib("/Users/darano/mukke", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 

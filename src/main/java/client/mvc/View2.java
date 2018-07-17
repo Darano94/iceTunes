@@ -1,5 +1,6 @@
 package client.mvc;
 
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import server.interfaces.RemoteInterface;
@@ -17,9 +18,18 @@ public class View2 extends BorderPane {
 
     private Button button = new Button("test");
 
+    private ListView allSongs = null;
 
     public View2 () throws RemoteException, NotBoundException, MalformedURLException {
+
+        allSongs = remote.getAllSongs();
+
         setCenter(button);
+        setLeft(allSongs);
+
+
+
+
 
         button.setOnAction(e -> {
             try {

@@ -1,5 +1,6 @@
 package server.classes;
 
+import javafx.scene.control.ListView;
 import server.interfaces.RemoteInterface;
 import server.mvc.Controller;
 import server.mvc.Model;
@@ -16,6 +17,11 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
     @Override
     public void link(Model model) throws RemoteException {
         contr.link(model, view);
+    }
+
+    @Override
+    public ListView getAllSongs() throws RemoteException {
+        return view.getSongListView();
     }
 
     @Override

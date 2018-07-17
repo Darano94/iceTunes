@@ -1,5 +1,6 @@
 package server.interfaces;
 
+import javafx.scene.control.ListView;
 import server.classes.IDOverFlowException;
 import server.classes.Playlist;
 import server.classes.Playlist;
@@ -12,6 +13,8 @@ import java.rmi.RemoteException;
 
 public interface RemoteInterface extends Remote {
     void link(Model model) throws RemoteException;
+
+    ListView getAllSongs() throws RemoteException;
 
     void loadbtn()throws RemoteException;
 
