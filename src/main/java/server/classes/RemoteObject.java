@@ -3,7 +3,7 @@ package server.classes;
 import server.interfaces.RemoteInterface;
 import server.mvc.Controller;
 import server.mvc.Model;
-import client.mvc.View;
+import server.mvc.View;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
