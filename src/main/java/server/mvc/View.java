@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.*;
 
-public class View extends BorderPane implements Externalizable {
+public class View extends BorderPane {
 
     // Variablen
 
@@ -218,13 +218,5 @@ public class View extends BorderPane implements Externalizable {
         return this.playlistListView;
     }
 
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
 
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-
-    }
 }

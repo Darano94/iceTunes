@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.classes.Playlist;
 import server.classes.RemoteObject;
+import server.interfaces.RemoteInterface;
 import server.mvc.Controller;
 import server.mvc.Model;
 import server.mvc.View;
@@ -12,6 +13,7 @@ import server.mvc.View;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 
 
 public class Server extends Application {
@@ -23,7 +25,7 @@ public class Server extends Application {
 
 
 
-        Remote remote = new RemoteObject(controller, view);
+        RemoteObject remote = new RemoteObject(controller, view);
 
         //start rmiregistry;
         LocateRegistry.createRegistry(1099);
