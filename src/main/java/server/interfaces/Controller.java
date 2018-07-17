@@ -4,6 +4,7 @@ package server.interfaces;
 import server.classes.IDOverFlowException;
 import server.classes.Playlist;
 import server.mvc.*;
+import client.mvc.View;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

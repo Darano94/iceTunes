@@ -5,7 +5,7 @@ import server.classes.Playlist;
 import server.classes.Playlist;
 import server.mvc.Model;
 import server.classes.Song;
-import server.mvc.View;
+import client.mvc.View;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
