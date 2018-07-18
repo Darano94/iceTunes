@@ -21,8 +21,8 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
     }
 
     @Override
-    public ListView getAllSongs() throws RemoteException {
-        return view.getSongListView();
+    public Playlist getAllSongs() throws RemoteException {
+        return contr.getModel().getAllSongs();
     }
 
     @Override
@@ -92,11 +92,6 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
     public void pauseSong(Song s) throws RemoteException {
         contr.pauseSong(s);
 
-    }
-
-    @Override
-    public ArrayList<Long> ids() throws RemoteException {
-        return contr.sendids();
     }
 
     public RemoteObject(Controller contr, View view) throws RemoteException {

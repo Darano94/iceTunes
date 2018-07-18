@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public interface RemoteInterface extends Remote {
     void link(Model model) throws RemoteException;
 
-    ListView getAllSongs() throws RemoteException;
+    Playlist getAllSongs() throws RemoteException;
 
     void loadbtn()throws RemoteException;
 
@@ -44,8 +44,4 @@ public interface RemoteInterface extends Remote {
     void stopsong() throws RemoteException;
 
     void pauseSong(server.classes.Song s) throws RemoteException;
-
-    public ArrayList<Long> ids() throws RemoteException;
-
-
 }

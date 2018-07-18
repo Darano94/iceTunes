@@ -3,6 +3,7 @@ package server.interfaces;
 
 import server.classes.IDOverFlowException;
 import server.classes.Playlist;
+import server.classes.Song;
 import server.mvc.*;
 
 
@@ -40,6 +41,4 @@ public interface Controller extends Serializable {
     void stopsong(View view);
 
     void pauseSong(server.classes.Song s);
-
-    public ArrayList<Long> sendids() throws RemoteException;
 }
