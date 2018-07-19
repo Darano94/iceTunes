@@ -3,6 +3,7 @@ package server;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import server.classes.IDOverFlowException;
 import server.classes.Playlist;
 import server.classes.RemoteObject;
 import server.interfaces.RemoteInterface;
@@ -18,7 +19,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Server extends Application {
 
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception, IDOverFlowException {
         Model model = new Model();
         View view = new View();
         Controller controller = new Controller();
@@ -35,7 +36,7 @@ public class Server extends Application {
 
 
         controller.link(model, view);
-        controller.loadlib("/Users/darano/mukke", new Playlist(), view);
+        controller.loadlib("C:/Users/Maxbi/Desktop/IceTunes", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 

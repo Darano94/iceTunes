@@ -24,7 +24,7 @@ public class Controller {
     public void loadlib(View view) throws RemoteException {
         Playlist p1 = new Playlist();
 
-        for(int i = 1; i <= remote.getAllSongs().size(); i++){
+        for(int i = 0; i <= remote.getAllSongs().size(); i++){
             Song tmp = remote.getAllSongs().findSongByID(i);
             p1.addSong(tmp);
         }
