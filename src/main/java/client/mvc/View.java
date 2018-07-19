@@ -89,14 +89,17 @@ public class View extends BorderPane {
 //        btnCommit.setOnAction(e -> controller.commitbtn(this));
           btnNext.setOnAction(e -> {
               try {
-                  controller.nextSong(l);
+                  long tmp = l;
+                   l = controller.nextSong(tmp);
               } catch (RemoteException e1) {
                   e1.printStackTrace();
               }
           });
           btnback.setOnAction(e -> {
               try {
-                  controller.prevSong(l);
+                  long tmp = l;
+                  l = controller.prevSong(tmp);
+
               } catch (RemoteException e1) {
                   e1.printStackTrace();
               }

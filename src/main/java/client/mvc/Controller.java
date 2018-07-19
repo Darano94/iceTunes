@@ -53,23 +53,29 @@ public class Controller {
         }
     }
 
-    public void nextSong(long id) throws RemoteException {
-        if (id < remote.getAllSongs().sizeOfPlaylist()&& id >0){
+    public long nextSong(long id) throws RemoteException {
+        long a = id;
+        if (a < remote.getAllSongs().sizeOfPlaylist()&& a >0){
         try {
-            remote.playSong(remote.getAllSongs().findSongByID(id+1));
+            remote.playSong(remote.getAllSongs().findSongByID(a+1));
         } catch (RemoteException e) {
             e.printStackTrace();
         }}
+        a++;
+        return a;
     }
 
-    public void prevSong(long id) throws RemoteException {
+    public long prevSong(long id) throws RemoteException {
+        long a = id;
 
-        if (id < remote.getAllSongs().sizeOfPlaylist()&& id >0){
+        if (a < remote.getAllSongs().sizeOfPlaylist()&& a >0){
         try {
-            remote.playSong(remote.getAllSongs().findSongByID(id-1));
+            remote.playSong(remote.getAllSongs().findSongByID(a-1));
         } catch (RemoteException e) {
             e.printStackTrace();
         }}
+        a--;
+        return a;
     }
 
     public void time ( View view) throws Exception{
