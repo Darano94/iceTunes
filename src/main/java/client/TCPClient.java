@@ -11,8 +11,7 @@ public class TCPClient {
 
         Socket clientsocket = new Socket("localhost", 5020);
 
-        clientsocket.getInputStream();
-        clientsocket.getOutputStream();
+
 
     }
 }

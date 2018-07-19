@@ -54,6 +54,7 @@ public class View extends BorderPane {
     private VBox vBoxRightFull = new VBox(10, vBoxRight, vBoxRight2);
 
     public Song s;
+    private Long l;
 
     // Methoden
 
@@ -77,7 +78,7 @@ public class View extends BorderPane {
 //        btnNext.setOnAction(e -> controller.nextbtn(this));
 //        btnback.setOnAction(e -> controller.backbtn(this));
 //        btndeleteplaylist.setOnAction(e -> controller.deleteplaylist(this));
-//        btnplaypause.setOnAction(e -> controller.playpauseSong(this));
+       btnplaypause.setOnAction(e -> controller.playpauseSong(this));
 //        btnstop.setOnAction(e -> controller.stopsong(this));
 
         cboxstrat.setTooltip(new Tooltip("Speichermethode auswählen."));
@@ -141,12 +142,8 @@ public class View extends BorderPane {
                     if (cell.isEmpty()) {
                         event.consume();
                     } else {
-                        s = cell.getItem();
-                        controller.setS(s);
-                        setTxtTitle(s.getTitle());
-                        setTxtAlbum(s.getAlbum());
-                        setTxtInterpret(s.getInterpret());
-
+                        l = cell.getItem().getId();
+                        System.out.println(l);
                     }
                 });
                 return cell;
