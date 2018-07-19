@@ -19,6 +19,7 @@ public class View extends BorderPane {
     private ListView<Song> songListView = new ListView<>();
     private ListView<Song> playlistListView = new ListView<>();
 
+
     private Label lblTitle = new Label("Title:");
     private Label lblInterpret = new Label("Interpret:");
     private Label lblAlbum = new Label("Album:");
@@ -44,10 +45,13 @@ public class View extends BorderPane {
 
     private Slider slider = new Slider();
 
+    private Label lblTime = new Label("Time:");
+
+
     private HBox hBoxRight = new HBox(10, btnback, btnplaypause, btnstop, btnNext, btnCommit);
     private HBox hboxbottom = new HBox(10, btnAddAll, btndeleteplaylist, lblcurrentduration);
     private HBox hBoxTop = new HBox(10,cboxstrat, btnLoad, btnSave);
-    private HBox hBoxTop2 = new HBox(10,slider, lblcurrentduration, lblfinalduration);
+    private HBox hBoxTop2 = new HBox(10,slider, lblcurrentduration, lblfinalduration); //Time
     private HBox hboxbox = new HBox(10, hBoxTop,hBoxTop2);
     private VBox vBoxRight = new VBox(2, lblTitle, txtTitle, lblInterpret, txtInterpret, lblAlbum, txtAlbum);
     private VBox vBoxRight2 = new VBox(5, hBoxRight, btnAddToPlaylist);
@@ -55,6 +59,12 @@ public class View extends BorderPane {
 
     public Song s;
     private Long l;
+
+//    SimpleDate Format
+//
+//    Date Time = new Date();
+//    SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "00:mm:ss");
+//    sout ( "Abspielzeit:" + simpleDateFormat.format(Time));
 
     // Methoden
 
@@ -155,6 +165,8 @@ public class View extends BorderPane {
     public void addController(Controller contr) {
         this.controller = contr;
     }
+
+
 
     // Getter Setter
 
