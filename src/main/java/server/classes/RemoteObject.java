@@ -80,7 +80,7 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
 
     @Override
     public void playSong(Song s) throws RemoteException {
-        contr.playSong(s, view);
+        contr.playSong(s.getId(), view);
     }
 
     @Override
@@ -92,6 +92,11 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
     public void pauseSong(Song s) throws RemoteException {
         contr.pauseSong(s);
 
+    }
+
+    @Override
+    public void setS(Song s) throws RemoteException {
+        contr.setS(s);
     }
 
     public RemoteObject(Controller contr, View view) throws RemoteException {

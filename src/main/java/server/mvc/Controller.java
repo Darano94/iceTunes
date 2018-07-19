@@ -35,6 +35,11 @@ public class Controller implements server.interfaces.Controller, Serializable {
     private long counter = -1;
 
     private Duration fullduration;
+
+    public Duration getCurrentduration() {
+        return currentduration;
+    }
+
     private Duration currentduration;
 
     private Song s;
@@ -271,14 +276,14 @@ public class Controller implements server.interfaces.Controller, Serializable {
     public void nextbtn(View view) {
         if (s.getId() < 0) { //wenn s ids negativ ist (also in playlist geeklickzt wure
             if (s.getId() - 1 >= -model.getPlaylist().size()) { //solange es noch nächsten song gibt
-                playSong((Song) model.getPlaylist().findSongByID(s.getId() - 1), view); //nächsten Song abpielen
+                playSong(model.getPlaylist().findSongByID(s.getId() - 1).getId(), view); //nächsten Song abpielen
                 s = (Song) model.getPlaylist().findSongByID(s.getId() - 1); //s = aktueller songs setzen, damit wir immer next drücken könnten
 
             }
         }
         if (s.getId() > 0) {
             if (s.getId() + 1 <= model.getAllSongs().size()) {
-                playSong((Song) model.getAllSongs().findSongByID(s.getId() + 1), view);
+                playSong( model.getAllSongs().findSongByID(s.getId() + 1).getId(), view);
                 s = (Song) model.getAllSongs().findSongByID(s.getId() + 1);
             }
         }
@@ -292,7 +297,7 @@ public class Controller implements server.interfaces.Controller, Serializable {
     @Override
     public void playpauseSong(View view) {
         if (isplaying == false) {
-            playSong(s, view);
+            playSong(s.getId(), view);
             view.setbtnplaypause("||");
             isplaying = true;
         } else if (isplaying == true) {
@@ -311,13 +316,13 @@ public class Controller implements server.interfaces.Controller, Serializable {
     public void backbtn(View view) {
         if (s.getId() < 0) {
             if (s.getId() + 1 < 0) { //solange es noch nächsten song gibt
-                playSong((Song) model.getPlaylist().findSongByID(s.getId() + 1), view);
+                playSong( model.getPlaylist().findSongByID(s.getId() + 1).getId(), view);
                 s = (Song) model.getPlaylist().findSongByID(s.getId() + 1);
             }
         }
         if (s.getId() > 0) {
             if (s.getId() - 1 > 0) {
-                playSong((Song) model.getAllSongs().findSongByID(s.getId() - 1), view);
+                playSong(model.getAllSongs().findSongByID(s.getId() - 1).getId(), view);
                 s = (Song) model.getAllSongs().findSongByID(s.getId() - 1);
             }
         }
@@ -440,7 +445,8 @@ public class Controller implements server.interfaces.Controller, Serializable {
     }
 
     @Override
-    public void playSong(Song s, View view) {
+    public void playSong(long id, View view) {
+        Song s = model.getAllSongs().findSongByID(id);
         songFile = new File(s.pathProperty().getValue());
         file = new Media(songFile.toURI().toString());
         player = new MediaPlayer(file);

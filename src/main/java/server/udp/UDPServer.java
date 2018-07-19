@@ -25,7 +25,7 @@ public class UDPServer {
         InetAddress address = packet.getAddress();
         int port = packet.getPort();
         int len = packet.getLength();
-        String newmsg = msg.getBytes().toString();//tring formatieren
+        String newmsg = msg.getBytes().toString();//String formatieren
         if (newmsg.equals("TIME:")){
             Date time = new Date();
             byte[] myTime = time.toString().getBytes();

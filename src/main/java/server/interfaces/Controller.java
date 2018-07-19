@@ -36,7 +36,7 @@ public interface Controller extends Serializable {
 
     void playpauseSong(View view);
 
-    void playSong(server.classes.Song s, View view);
+    void playSong(long id, View view);
 
     void stopsong(View view);
 

@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import server.classes.IDOverFlowException;
 import server.classes.Song;
-import server.mvc.Controller;
+import client.mvc.Controller;
 
 public class View extends BorderPane {
 
@@ -88,8 +88,9 @@ public class View extends BorderPane {
 //        btnNext.setOnAction(e -> controller.nextbtn(this));
 //        btnback.setOnAction(e -> controller.backbtn(this));
 //        btndeleteplaylist.setOnAction(e -> controller.deleteplaylist(this));
-       btnplaypause.setOnAction(e -> controller.playpauseSong(this));
-//        btnstop.setOnAction(e -> controller.stopsong(this));
+       btnplaypause.setOnAction(e -> {
+           controller.playSong(l);
+       });
 
         cboxstrat.setTooltip(new Tooltip("Speichermethode auswählen."));
         cboxstrat.getSelectionModel().selectFirst();
@@ -153,7 +154,6 @@ public class View extends BorderPane {
                         event.consume();
                     } else {
                         l = cell.getItem().getId();
-                        System.out.println(l);
                     }
                 });
                 return cell;
@@ -217,6 +217,5 @@ public class View extends BorderPane {
     public ListView<Song> getPlaylistView() {
         return this.playlistListView;
     }
-
 
 }

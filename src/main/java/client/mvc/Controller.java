@@ -3,6 +3,7 @@ package client.mvc;
 import server.classes.Playlist;
 import server.classes.Song;
 import server.interfaces.RemoteInterface;
+import server.mvc.Model;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -17,6 +18,7 @@ public class Controller {
 
 
     private Song s;
+    private Model model;
 
     public Controller() throws RemoteException, NotBoundException, MalformedURLException {
     }
@@ -26,12 +28,20 @@ public class Controller {
     public void loadlib(View view) throws RemoteException {
         Playlist p1 = new Playlist();
 
-        for(int i = 0; i <= remote.getAllSongs().size(); i++){
+        for(int i = 1; i <= remote.getAllSongs().size(); i++){
             Song tmp = remote.getAllSongs().findSongByID(i);
             p1.addSong(tmp);
         }
 
         view.getSongListView().setItems(p1);
+    }
+
+    public void playSong(long id){
+        try {
+            remote.playSong(remote.getAllSongs().findSongByID(id));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     public void time ( View view) throws Exception{
@@ -43,4 +53,8 @@ public class Controller {
     }
 
 
+    public void link(Model model, View view) {
+        this.model = model;
+        view.addController(this);
+    }
 }

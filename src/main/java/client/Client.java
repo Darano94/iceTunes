@@ -17,8 +17,7 @@ public class Client extends Application {
         Controller controller = new Controller();
 
         controller.loadlib(view);
-
-//        controller.link(model, view);
+        controller.link(model, view);
 
 
 

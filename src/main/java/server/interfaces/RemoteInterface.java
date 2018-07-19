@@ -44,4 +44,7 @@ public interface RemoteInterface extends Remote {
     void stopsong() throws RemoteException;
 
     void pauseSong(server.classes.Song s) throws RemoteException;
+
+    void setS(Song s) throws RemoteException;
+
 }
