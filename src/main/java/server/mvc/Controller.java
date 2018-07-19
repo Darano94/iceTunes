@@ -36,10 +36,6 @@ public class Controller implements server.interfaces.Controller, Serializable {
 
     private Duration fullduration;
 
-    public Duration getCurrentduration() {
-        return currentduration;
-    }
-
     private Duration currentduration;
 
     private Song s;
@@ -219,6 +215,9 @@ public class Controller implements server.interfaces.Controller, Serializable {
         });
     }
 
+    public Duration getCurrentduration() {
+        return currentduration;
+    }
 
     @Override
     public void addtoplaylistbtn(View view) {
@@ -331,6 +330,7 @@ public class Controller implements server.interfaces.Controller, Serializable {
         view.setTxtInterpret(s.getInterpret());
         view.setTxtTitle(s.getTitle());
     }
+
 
     @Override
     public void deleteplaylist(View view) {
@@ -487,5 +487,6 @@ public class Controller implements server.interfaces.Controller, Serializable {
     public void setS(Song s) {
         this.s = s;
     }
+
 
 }

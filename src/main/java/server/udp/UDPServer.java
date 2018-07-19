@@ -1,5 +1,7 @@
 package server.udp;
 
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -25,7 +27,7 @@ public class UDPServer {
         InetAddress address = packet.getAddress();
         int port = packet.getPort();
         int len = packet.getLength();
-        String newmsg = msg.getBytes().toString();//String formatieren
+        String newmsg = msg.getBytes().toString();
         if (newmsg.equals("TIME:")){
             Date time = new Date();
             byte[] myTime = time.toString().getBytes();
