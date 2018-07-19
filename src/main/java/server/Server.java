@@ -36,7 +36,7 @@ public class Server extends Application {
 
 
         controller.link(model, view);
-        controller.loadlib("C:/mukke/", new Playlist(), view);
+        controller.loadlib("C:/Users/Maxbi/Desktop/IceTunes", new Playlist(), view);
         controller.loadPlaylist(new Playlist());
 
 

@@ -44,6 +44,34 @@ public class Controller {
         }
     }
 
+    public void stopSong(){
+        try
+        {
+            remote.stopsong();
+        }catch(RemoteException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void nextSong(long id) throws RemoteException {
+        if (id < remote.getAllSongs().sizeOfPlaylist()&& id >0){
+        try {
+            remote.playSong(remote.getAllSongs().findSongByID(id+1));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }}
+    }
+
+    public void prevSong(long id) throws RemoteException {
+
+        if (id < remote.getAllSongs().sizeOfPlaylist()&& id >0){
+        try {
+            remote.playSong(remote.getAllSongs().findSongByID(id-1));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }}
+    }
+
     public void time ( View view) throws Exception{
 
         Date Time = new Date();

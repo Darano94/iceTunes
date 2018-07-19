@@ -10,6 +10,8 @@ import server.classes.IDOverFlowException;
 import server.classes.Song;
 import client.mvc.Controller;
 
+import java.rmi.RemoteException;
+
 public class View extends BorderPane {
 
     // Variablen
@@ -85,12 +87,23 @@ public class View extends BorderPane {
 //        btnAddAll.setOnAction(e -> controller.addallbtn(this));
 //        btnAddToPlaylist.setOnAction(e -> controller.addtoplaylistbtn(this));
 //        btnCommit.setOnAction(e -> controller.commitbtn(this));
-//        btnNext.setOnAction(e -> controller.nextbtn(this));
-//        btnback.setOnAction(e -> controller.backbtn(this));
+          btnNext.setOnAction(e -> {
+              try {
+                  controller.nextSong(l);
+              } catch (RemoteException e1) {
+                  e1.printStackTrace();
+              }
+          });
+          btnback.setOnAction(e -> {
+              try {
+                  controller.prevSong(l);
+              } catch (RemoteException e1) {
+                  e1.printStackTrace();
+              }
+          });
 //        btndeleteplaylist.setOnAction(e -> controller.deleteplaylist(this));
-       btnplaypause.setOnAction(e -> {
-           controller.playSong(l);
-       });
+          btnplaypause.setOnAction(e -> controller.playSong(l));
+          btnstop.setOnAction(e -> controller.stopSong());
 
         cboxstrat.setTooltip(new Tooltip("Speichermethode auswählen."));
         cboxstrat.getSelectionModel().selectFirst();
