@@ -32,6 +32,8 @@ public class View extends BorderPane {
     private Label lblAlbum = new Label("Album:");
     private Label lblfinalduration = new Label("/   "+"0:00");
     private Label lblcurrentduration = new Label ("0:00");
+    private Label lblTime = new Label("Time:");
+
 
     private TextField txtTitle = new TextField();
     private TextField txtInterpret = new TextField();

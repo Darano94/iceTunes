@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Controller {
 
@@ -30,6 +32,14 @@ public class Controller {
         }
 
         view.getSongListView().setItems(p1);
+    }
+
+    public void time ( View view) throws Exception{
+
+        Date Time = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("00:mm:ss");
+        System.out.println("Abspielzeit"+simpleDateFormat.format(Time));
+
     }
 
 

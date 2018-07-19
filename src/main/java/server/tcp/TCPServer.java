@@ -1,4 +1,4 @@
-package server;
+package server.tcp;
 
 import client.Client;
 
@@ -19,8 +19,8 @@ public class TCPServer {
         while (true){
             Socket connectionsocket = null;
 
-            try{
-              connectionsocket = welcomesocket.accept();
+            try {
+                connectionsocket = welcomesocket.accept();
                 System.out.println("Ein Client hat sich verbunden.");
 
                 //in out streams ?
